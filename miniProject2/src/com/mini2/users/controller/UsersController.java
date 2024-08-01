@@ -47,8 +47,12 @@ public class UsersController {
         System.out.print("주소: ");
         String address = sc.nextLine();
 
+        System.out.print("추천인 이메일 (선택사항): ");
+        String referrerEmail = sc.nextLine();
+
         // UserInsert 객체를 생성하여 회원가입 처리
-        new UserInsert(userName, email, password, phoneNumber, address);
+        new UserInsert(userName, email, password, phoneNumber, address, referrerEmail);
+  
     }
 
     // 로그인된 사용자의 정보를 업데이트
