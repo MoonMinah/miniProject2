@@ -27,7 +27,6 @@ public class UserUpdate {
             pstmt.setString(1, newPassword);
             pstmt.setInt(2, userId);
             int rows = pstmt.executeUpdate();
-            System.out.println("비밀번호가 수정되었습니다");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -40,7 +39,6 @@ public class UserUpdate {
             pstmt.setString(1, newEmail);
             pstmt.setInt(2, userId);
             int rows = pstmt.executeUpdate();
-            System.out.println("이메일이 수정되었습니다.");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -53,7 +51,6 @@ public class UserUpdate {
             pstmt.setString(1, newUserName);
             pstmt.setInt(2, userId);
             int rows = pstmt.executeUpdate();
-            System.out.println("유저 이름이 수정되었습니다.");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -66,7 +63,6 @@ public class UserUpdate {
             pstmt.setString(1, newPhoneNumber);
             pstmt.setInt(2, userId);
             int rows = pstmt.executeUpdate();
-            System.out.println("전화번호가 수정되었습니다.");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -79,7 +75,6 @@ public class UserUpdate {
             pstmt.setString(1, newAddress);
             pstmt.setInt(2, userId);
             int rows = pstmt.executeUpdate();
-            System.out.println("주소가 수정되었습니다.");
         } catch (SQLException e) {
             e.printStackTrace();
         }

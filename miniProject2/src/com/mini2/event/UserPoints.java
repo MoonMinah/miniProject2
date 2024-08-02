@@ -26,9 +26,9 @@ public class UserPoints {
 
             if (rs.next()) {
                 int totalPoints = rs.getInt("total_points");
-                System.out.println("보유하고 있는 총 포인트는 " + totalPoints + " 입니다.");
+                System.out.println("\t💰 보유하고 있는 총 포인트는 " + totalPoints + " 입니다.");
             } else {
-                System.out.println("보유하고 있는 포인트가 존재하지 않습니다.");
+                System.out.println("\t💰 보유하고 있는 포인트가 존재하지 않습니다.");
             }
         } catch (SQLException e) {
             System.out.println("SQL Error: " + e.getMessage());
