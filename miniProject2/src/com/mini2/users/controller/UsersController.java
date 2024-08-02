@@ -17,7 +17,7 @@ public class UsersController {
     private Map<String, Integer> session = new HashMap<>();
     String regex = "[!@#$%^&*]";
 
-    //사용자 등록을 처리한다.
+    //사용자 등록을 처리
     public void registerUser() {
         boolean check = true;
         String password = null;
@@ -33,7 +33,7 @@ public class UsersController {
             System.out.println("※주의! 비밀번호는 최소 8글자와 특수문자가 포함되어야 합니다.\n");
             System.out.print("비밀번호: ");
             password = sc.nextLine();
-
+g
             if (password.length() < 8 || !password.matches(".*[!@#$%^&*].*")) {
                 System.out.println("비밀번호는 8글자 이상이며, 최소 하나의 특수문자가 포함되어야 합니다.\n");
             } else {
