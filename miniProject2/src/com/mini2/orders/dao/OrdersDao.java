@@ -12,6 +12,7 @@ import com.mini2.jdbcUtil.JdbcUtil;
 
 //db와 데이터 주고 받음
 public class OrdersDao {
+
   
   Connection conn = null;
   PreparedStatement pstmt = null;
@@ -51,7 +52,6 @@ public class OrdersDao {
     
     
   }
-  
   
 
 }

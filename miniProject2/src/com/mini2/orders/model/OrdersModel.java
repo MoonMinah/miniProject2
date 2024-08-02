@@ -1,5 +1,6 @@
 package com.mini2.orders.model;
 
+
 import java.sql.Timestamp;
 import lombok.Data;
 
@@ -14,5 +15,4 @@ public class OrdersModel {
   
   
   
-
 }
