@@ -10,15 +10,15 @@ public class UsersService {
 	UserPoints userPoints = new UserPoints();
 	private boolean isRunning = true;
 	private Scanner sc = new Scanner(System.in);
-
 	
 	public void start() {
 		while (isRunning) {
-			System.out.println("번호 선택");
-			System.out.println("1. 회원가입");
-			System.out.println("2. 로그인");
-			System.out.println("3. 종료");
-			System.out.print("번호 선택 => ");
+			System.out.println("\n==================================================================================================");
+			System.out.println("\t\t\t\t\t☕️ [카페 오더 앱] ☕️");
+	        System.out.println("|\t1. 회원가입\t\t\t\t\t\t\t\t\t\t|");
+	        System.out.println("|\t2. 로그인\t\t\t\t\t\t\t\t\t\t\t|");
+	        System.out.println("|\t3. 종료\t\t\t\t\t\t\t\t\t\t\t|");
+	        System.out.print("\t원하시는 번호를 선택하세요 => ");
 			int choice = sc.nextInt();
 			sc.nextLine(); // 입력 버퍼 비우기
 
@@ -28,29 +28,32 @@ public class UsersService {
 				break;
 			case 2:
 				usersController.loginUser();
-				showPostLoginMenu(); // 로그인 후 메뉴 표시
+				// 메인화면 만들어서 후에는 메인화면으로 이동하게 만들기
+				showMyInfo(); // 로그인 후 메뉴 표시
 				break;
 			case 3:
+				System.out.println("\t종료합니다. 이용해 주셔서 감사합니다!");
 				isRunning = false;
 				break;
 			default:
-				System.out.println("유효하지 않은 선택입니다.");
+				System.out.println("\t⚠️ 유효하지 않은 선택입니다. 다시 선택해 주세요.");
 				break;
 			}
 		}
 	}
 
 	//로그인 이후 메뉴
-	private void showPostLoginMenu() {
+	private void showMyInfo() {
 		boolean loggedIn = usersController.getSession().containsKey("user_id");
 		while (loggedIn) {
-			System.out.println("번호 선택");
-			System.out.println("1. 회원 정보 수정");
-			System.out.println("2. 회원 탈퇴");
-			System.out.println("3. 보유 포인트 현황");
-			System.out.println("4. 로그아웃");
-			System.out.println("5. 종료");
-			System.out.print("번호 선택 => ");
+			System.out.println("\n\t\t\t\t\t📒 [내 정보 보기] 📒");
+			System.out.println("\n==================================================================================================");
+	        System.out.println("|\t1. 회원 정보 수정\t\t\t\t\t\t\t\t\t\t|");
+	        System.out.println("|\t2. 회원 탈퇴\t\t\t\t\t\t\t\t\t\t|");
+	        System.out.println("|\t3. 보유 포인트 현황\t\t\t\t\t\t\t\t\t\t|");
+	        System.out.println("|\t4. 로그아웃\t\t\t\t\t\t\t\t\t\t|");
+	        System.out.println("|\t5. 종료\t\t\t\t\t\t\t\t\t\t\t|");
+	        System.out.print("\t원하시는 번호를 선택하세요: ");
 			int choice = sc.nextInt();
 			sc.nextLine(); // 입력 버퍼 비우기
 
@@ -59,6 +62,7 @@ public class UsersService {
 				usersController.updateUserInfo();
 				break;
 			case 2:
+				System.out.println("\t회원 탈퇴가 완료되었습니다. 로그아웃합니다.");
 				usersController.deleteUser();
 				loggedIn = false; // 탈퇴 후 로그아웃
 				break;
@@ -67,22 +71,19 @@ public class UsersService {
 				userPoints.UserPoints(userId);
 				break;
 			case 4:
+				System.out.println("\t로그아웃 되었습니다.");
 				usersController.getSession().clear(); // 로그아웃
 				loggedIn = false;
 				break;
 			case 5:
+				System.out.println("\t종료합니다. 이용해 주셔서 감사합니다!");
 				isRunning = false;
 				loggedIn = false;
 				break;
 			default:
-				System.out.println("유효하지 않은 선택입니다.");
+				System.out.println("\t⚠️ 유효하지 않은 선택입니다. 다시 선택해 주세요.");
 				break;
 			}
 		}
-	}
-
-	public static void main(String[] args) {
-		UsersService service = new UsersService();
-		service.start();
 	}
 }

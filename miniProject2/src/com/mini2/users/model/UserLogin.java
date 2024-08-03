@@ -25,12 +25,12 @@ public class UserLogin {
 				
 				//비밀번호가 틀렸을 경우
 				if (!password.equals(storedPassword)) {
-					System.out.println("비밀번호가 틀렸습니다.");
+					System.out.println("\t⚠️ 비밀번호가 틀렸습니다.");
 					userId = null;
 				}
 				// 이메일이 존재하지 않는 경우
 			} else {
-				System.out.println("존재하지 않는 이메일입니다.");
+				System.out.println("\t⚠️ 존재하지 않는 이메일입니다.");
 			}
 
 			rs.close();
