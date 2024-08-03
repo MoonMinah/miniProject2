@@ -1,10 +1,14 @@
 package com.mini2.payments.model;
 
+import java.sql.Timestamp;
+import lombok.Data;
+
+@Data
 public class PaymentsModel {
-    private int payment_id;
-    private int order_id;
-    private int payment_method;
-    private int payment_date;
-    private int amount;
-	  private boolean payment_status;
+    private int paymentId; // 결제 ID
+    private int orderId; // 주문 ID
+    private int paymentMethod; // 결제 방법
+    private Timestamp paymentDate; // 결제 날짜
+    private int amount; // 결제 금액
+    private boolean paymentStatus; // 결제 상태
 }
