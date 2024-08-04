@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import com.mini2.payments.model.PaymentsModel;
+import com.mini2.orders.model.OrdersModel;
 import com.mini2.jdbcUtil.JdbcUtil;
 
 public class PayDao {
@@ -33,4 +34,25 @@ public class PayDao {
         }
         return payment;
     }
+
+    // 결제 정보를 삽입하는 메서드
+    public boolean insertPayment(PaymentsModel payment) {
+        String sql = "INSERT INTO payments (order_id, payment_method, amount, pay_status) VALUES (?, ?, ?, ?)";
+
+        try (Connection conn = JdbcUtil.connection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, payment.getOrderId());
+            pstmt.setInt(2, payment.getPaymentMethod());
+            pstmt.setTimestamp(3, payment.getPaymentDate());
+            pstmt.setInt(4, payment.getAmount());
+            pstmt.setBoolean(5, payment.isPaymentStatus());
+
+            int rowsAffected = pstmt.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
 }
