@@ -1,4 +1,4 @@
-package com.mini2.menuitems.dao;
+package com.mini2.menuDetail.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -6,18 +6,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
-import com.mini2.category.model.CategoryModel;
 import com.mini2.jdbcUtil.JdbcUtil;
 import com.mini2.menuitems.model.MenuitemsModel;
 
-public class MenuitemsDao {
+public class MenuDetailDao {
   
-  Connection conn = null;
+  //Connection conn = null;
   PreparedStatement pstmt = null;
   ResultSet rs = null;
   
-  public List<MenuitemsModel> menuSelect(String category) {
+  public List<MenuitemsModel> menuSelect(Connection conn, String category) {
     
     //메뉴 목록
     List<MenuitemsModel> list = new ArrayList<MenuitemsModel>();
@@ -57,8 +55,5 @@ public class MenuitemsDao {
       e.printStackTrace();
     }
     return list;
-    
-    
   }
-
 }

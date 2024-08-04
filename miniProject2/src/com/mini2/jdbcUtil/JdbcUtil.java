@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  * 모든 기능에 db 연결하는 부분이 들어가므로 유지보수와 효율적으로 작업하기 위해 기능 구현.
@@ -12,7 +13,7 @@ import java.sql.ResultSet;
 //db연결 기능.
 public class JdbcUtil {
   
-  public static Connection connection() {
+  public static Connection connection() throws SQLException {
     
     String url = "jdbc:mysql://localhost:3306/project2";
     String name = "root";
@@ -25,7 +26,7 @@ public class JdbcUtil {
       
       //연결하기
       conn = DriverManager.getConnection(url, name, pw);
-    } catch (Exception e) {
+    } catch (ClassNotFoundException e) {
       // TODO: handle exception
       e.printStackTrace();
     }

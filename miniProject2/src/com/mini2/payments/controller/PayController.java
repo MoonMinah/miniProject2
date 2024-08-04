@@ -4,9 +4,11 @@ import com.mini2.payments.model.PaymentsModel;
 import com.mini2.payments.service.PaymentsServiceImpl;
 
 public class PayController {
-    public static void main(String[] args) {
+  
+    public void pay() {
+      
         // 조회할 orderId를 설정 (예: 1)
-        int orderId = 1;
+        int orderId = 8;
         
         PaymentsServiceImpl paymentService = new PaymentsServiceImpl();
         PaymentsModel payment = paymentService.getPaymentByOrderId(orderId);
