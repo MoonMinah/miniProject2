@@ -1,7 +1,7 @@
 package com.mini2.payments.model;
 
 
-import java.security.Timestamp;
+import java.sql.Timestamp;
 
 import lombok.Data;
 
@@ -13,6 +13,6 @@ public class PaymentsModel {
     private int paymentMethod;
     private Timestamp paymentDate;
     private int amount;
-	  private boolean paymentStatus;
+	private boolean paymentStatus;
 
 }
