@@ -53,5 +53,48 @@ public class OrdersDao {
     
   }
   
+  //주문 테이블 데이터 삽입.
+  public static int insertOrder(Connection conn, int userId, int totalAmount) throws SQLException {
+    String sql = "INSERT INTO orders (user_id, total_amount, status) VALUES (?, ?, ?)";
+    try (
+      PreparedStatement pstmt = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
+      pstmt.setInt(1, userId);
+      pstmt.setInt(2, totalAmount);
+      pstmt.setInt(3, 0); //미결제
+      int affectedRows = pstmt.executeUpdate();
+
+      if (affectedRows == 0) {
+        throw new SQLException("주문 실패, 열이 없음.");
+      }
+
+      try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
+        if (generatedKeys.next()) {
+          return generatedKeys.getInt(1);
+        } else {
+          throw new SQLException("주문 실패, 주문 아이디x");
+        }
+      }
+    }
+  }
+
+  public static void insertMenuDetail(Connection conn, int orderId, int itemId, int quantity) throws SQLException {
+    String sql = "INSERT INTO menu_detail (item_id, order_id, quantity) VALUES (?, ?, ?)";
+    try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+      pstmt.setInt(1, itemId);
+      pstmt.setInt(2, orderId);
+      pstmt.setInt(3, quantity);
+      pstmt.executeUpdate();
+    }
+  }
+
+  public static void updateOrderTotalAmount(Connection conn, int orderId, int totalAmount) throws SQLException {
+    String sql = "UPDATE orders SET total_amount = ? WHERE order_id = ?";
+    try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+      pstmt.setInt(1, totalAmount);
+      pstmt.setInt(2, orderId);
+      pstmt.executeUpdate();
+    }
+  }
+  
 
 }
