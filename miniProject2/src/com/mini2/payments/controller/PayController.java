@@ -3,6 +3,8 @@ package com.mini2.payments.controller;
 import com.mini2.payments.model.PaymentsModel;
 import com.mini2.payments.service.PaymentsServiceImpl;
 import com.mini2.menuitems.model.MenuitemsModel;
+import com.mini2.orders.controller.OrdersController;
+
 import java.util.List;
 import java.util.Scanner;
 
@@ -72,8 +74,12 @@ public class PayController {
                                 boolean isUpdated = paymentService.updatePaymentStatus(payment.getPaymentId(), totalAmount);
                                 if (isUpdated) {
                                     System.out.println("결제가 완료되었습니다.");
+                                    OrdersController controller = new OrdersController();
+                    				controller.processOrder();
                                 } else {
-                                    System.out.println("결제 업데이트에 실패했습니다.");
+                                    System.out.println("결제에 실패했습니다.");
+                                  OrdersController controller = new OrdersController();
+                    				controller.processOrder();
                                 }
                                 return; // while 루프를 벗어나기 위해 return
                             case "2":
@@ -81,6 +87,8 @@ public class PayController {
                                 boolean isDeleted = paymentService.deletePayment(payment.getPaymentId());
                                 if (isDeleted) {
                                     System.out.println("결제가 취소되었습니다.");
+                                    OrdersController controller = new OrdersController();
+                    				controller.processOrder();
                                 } else {
                                     System.out.println("결제 취소에 실패했습니다.");
                                 }
