@@ -13,12 +13,20 @@ import com.mini2.users.model.UserDelete;
 
 //사용자 관련 작업을 처리하는 컨트롤러
 public class UsersController {
+	private static UsersController instance = new UsersController();
 	private UserUpdate updater = new UserUpdate();
 	private UserLogin userlogin = new UserLogin();
 	private UserDelete userDelete = new UserDelete();
 	private Scanner sc = new Scanner(System.in);
 	private Map<String, Integer> session = new HashMap<>();
 
+	private UsersController() { }
+	
+	//싱글톤 패턴 
+	public static UsersController getInstance() {
+        return instance;
+    }
+	
 	// 사용자 등록을 처리
 	public void registerUser() {
 		boolean check = true;

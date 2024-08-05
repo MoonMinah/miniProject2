@@ -7,7 +7,6 @@ import java.sql.ResultSet;
 
 //사용자의 로그인 인증 처리
 public class UserLogin {
-
 	public Integer UserLogin(String email, String password) {
 		Integer userId = null;
 		try {

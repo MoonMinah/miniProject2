@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class UserPoints {
-	public void UserPoints(int userId) {
+	public void showUserPoints(int userId) {
 		Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
