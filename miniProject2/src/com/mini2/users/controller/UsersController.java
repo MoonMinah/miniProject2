@@ -20,13 +20,14 @@ public class UsersController {
 	private Scanner sc = new Scanner(System.in);
 	private Map<String, Integer> session = new HashMap<>();
 
-	private UsersController() { }
-	
-	//싱글톤 패턴 
+	private UsersController() {
+	}
+
+	// 싱글톤 패턴
 	public static UsersController getInstance() {
-        return instance;
-    }
-	
+		return instance;
+	}
+
 	// 사용자 등록을 처리
 	public void registerUser() {
 		boolean check = true;
@@ -120,6 +121,10 @@ public class UsersController {
 		while (check) {
 			System.out.print("\t이메일 => ");
 			newEmail = sc.nextLine();
+			
+			if (newEmail.isEmpty()) { // 빈칸일 경우 정규식 검증 패스
+				break;
+			}
 
 			Pattern pattern = Pattern.compile(regexrEmail);
 			Matcher matcher = pattern.matcher(newEmail);
@@ -132,12 +137,16 @@ public class UsersController {
 		}
 		check = true;
 
-		// 비밀번호검증 -> 최소 8글자, 특수문자 포함
+		// 비밀번호 검증 -> 최소 8글자, 특수문자 포함
 		String regexrPassword = "[!@#$%^&*]";
 		while (check) {
 			System.out.println("\t※주의! 비밀번호는 최소 8글자와 특수문자가 포함되어야 합니다.");
 			System.out.print("\t비밀번호 => ");
 			newPassword = sc.nextLine();
+
+			if (newPassword.isEmpty()) { // 빈칸일 경우 정규식 검증 패스
+				break;
+			}
 
 			if (newPassword.length() < 8) {
 				System.out.println("\t⚠️ 비밀번호는 8글자 이상이어야 합니다.\n");
@@ -151,6 +160,7 @@ public class UsersController {
 				}
 			}
 		}
+		check = true;
 
 		// 전화번호 검증 정규식
 		String regexrPhoneNumber = "^\\d{3}-\\d{3,4}-\\d{4}$";
@@ -158,6 +168,10 @@ public class UsersController {
 			System.out.print("\t전화번호 => ");
 			newPhoneNumber = sc.nextLine();
 
+			if (newPhoneNumber.isEmpty()) {	//빈칸일 경우 정규식 검증 패스
+				break;
+			}
+			
 			Pattern pattern = Pattern.compile(regexrPhoneNumber);
 			Matcher matcher = pattern.matcher(newPhoneNumber);
 
