@@ -35,7 +35,7 @@ public class PaymentsController {
                 System.out.println("예시 제품명                           1               1000");
                 System.out.println("예시 제품명2                          2               2000");
                 System.out.println("-------------------------------------------------------");
-                System.out.printf("                                              금액: %d%n", payment.getOrderAmount());
+                System.out.printf("                                              금액: %d%n", payment.getTotalAmount());
                 System.out.println("-------------------------------------------------------");
                 System.out.println(i + 1 + "번 리뷰하기");
                 System.out.println();
@@ -44,7 +44,7 @@ public class PaymentsController {
 
             System.out.print("리뷰를 작성할 결제 번호를 입력하세요 (0을 입력하면 종료): ");
             int choice = sc.nextInt();
-            sc.nextLine();  // Consume the newline
+            sc.nextLine();
 
             while (choice != 0 && choice <= payments.size()) {
                 PaymentsModel selectedPayment = payments.get(choice - 1);
