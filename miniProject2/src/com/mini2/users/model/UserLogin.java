@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import org.mindrot.jbcrypt.BCrypt;
 
 //사용자의 로그인 인증 처리
 public class UserLogin {
@@ -23,7 +24,7 @@ public class UserLogin {
 				String storedPassword = rs.getString("password");
 				
 				//비밀번호가 틀렸을 경우
-				if (!password.equals(storedPassword)) {
+				if (!BCrypt.checkpw(password, storedPassword)) {
 					System.out.println("\t⚠️ 비밀번호가 틀렸습니다.");
 					userId = null;
 				}

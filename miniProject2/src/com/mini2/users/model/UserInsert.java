@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
-
+import org.mindrot.jbcrypt.BCrypt;
 import com.mini2.event.Event;
 
 public class UserInsert {
@@ -42,7 +42,7 @@ public class UserInsert {
 			pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			pstmt.setString(1, newUserName);
 			pstmt.setString(2, newEmail);
-			pstmt.setString(3, newPassword);
+			pstmt.setString(3, BCrypt.hashpw(newPassword, BCrypt.gensalt())); // 비밀번호 해싱
 			pstmt.setString(4, newPhoneNumber);
 			pstmt.setString(5, newAddress);
 			pstmt.setTimestamp(6, new Timestamp(System.currentTimeMillis()));
