@@ -25,3 +25,4 @@ replay_pid*
 .settings/
 miniProject2/.classpath
 miniProject2/.project
+/bin/
