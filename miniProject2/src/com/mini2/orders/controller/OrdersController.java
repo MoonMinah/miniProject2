@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import com.mini2.category.model.CategoryModel;
 import com.mini2.menuitems.model.MenuitemsModel;
 import com.mini2.orders.service.OrderServiceImpl;
 import com.mini2.payments.controller.PayController;
@@ -17,6 +18,9 @@ public class OrdersController {
 		OrderServiceImpl orderService = new OrderServiceImpl();
 		PaymentsServiceImpl paymentsServiceImpl = new PaymentsServiceImpl();
 		UsersController userController = UsersController.getInstance();
+		List<CategoryModel> categoryList = orderService.categoryAll();
+
+		
 
 		Map<String, Integer> session = userController.getSession();
 		Integer userId = session.get("user_id"); // Integer 객체로 받아오기
@@ -24,13 +28,27 @@ public class OrdersController {
 			System.out.println("\t사용자가 로그인되지 않았습니다.");
 			return; // 또는 예외 처리
 		}
-
+		
 		try {
 			boolean addMoreOrders = true;
 			List<MenuitemsModel> menuItems = new ArrayList<>();
 			List<Integer> quantities = new ArrayList<>();
 
+
 			while (addMoreOrders) {
+			  System.out.println("\t[카테고리 목록]");
+		        System.out.println("-------------------------------------------------------");
+		        if (categoryList != null && !categoryList.isEmpty()) {
+		          for (CategoryModel category : categoryList) {
+		            System.out.printf("%d. %s \t| ", category.getCategoryId(), category.getCategoryName());
+		          }
+		        } else {
+		          System.out.println("카테고리를 불러올 수 없습니다.");
+		          return;
+		        }
+
+		        System.out.println();
+		        System.out.println("-------------------------------------------------------");
 				System.out.print("\t카테고리를 입력해주세요 => ");
 				String categoryByName = scan.nextLine();
 				List<MenuitemsModel> menuList = orderService.getMenuByCategory(categoryByName);

@@ -8,6 +8,7 @@ import java.sql.Timestamp;
 
 import com.mini2.payments.model.PaymentsModel;
 import com.mini2.jdbcUtil.JdbcUtil;
+import com.mini2.orders.model.OrdersModel;
 
 public class PayDao {
 
@@ -40,11 +41,16 @@ public class PayDao {
 
     // 결제 정보를 삽입하는 메서드
     public boolean insertPayment(PaymentsModel payment) {
+
         String sql = "INSERT INTO payments (order_id, user_id, payment_method, order_amount, total_amount, pay_status, payment_date) VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+      
+
 
         try (Connection conn = JdbcUtil.connection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1, payment.getOrderId());
+
             pstmt.setInt(2, payment.getUserId());
             pstmt.setInt(3, payment.getPaymentMethod());
             pstmt.setInt(4, payment.getOrderAmount());
@@ -58,6 +64,8 @@ public class PayDao {
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("Error: " + e.getMessage());
+
+
         }
         return false;
     }
