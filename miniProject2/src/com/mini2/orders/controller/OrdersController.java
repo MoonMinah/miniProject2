@@ -47,7 +47,6 @@ public class OrdersController {
 				}
 				System.out.println("-------------------------------------------------------");
 				System.out.print("\t메뉴를 입력해주세요 => ");
-				// int menuId = scan.nextInt();
 				String menuName = scan.nextLine();
 				System.out.print("\t수량을 입력해주세요 => ");
 				int quantity = scan.nextInt();
@@ -56,7 +55,6 @@ public class OrdersController {
 				MenuitemsModel selectedItem = menuList.stream().filter(item -> item.getMenuName().equals(menuName))
 						.findFirst().orElse(null);
 
-				// System.out.println(selectedItem.getMenuName());
 				if (selectedItem != null) {
 					menuItems.add(selectedItem);
 					quantities.add(quantity);
@@ -64,8 +62,8 @@ public class OrdersController {
 					System.out.println("\t⚠️잘못된 메뉴 선택입니다.");
 				}
 
-				System.out.println("\t담으신 메뉴 : " + selectedItem.getMenuName() + ", 수량: "+ quantity);
-		        System.out.print("\t추가 주문하시겠습니까? (y/n) => ");
+				System.out.println("\t담으신 메뉴 : " + selectedItem.getMenuName() + ", 수량: " + quantity);
+				System.out.print("\t추가 주문하시겠습니까? (y/n) => ");
 				String addOrder = scan.nextLine();
 				if (addOrder.equalsIgnoreCase("n")) {
 					addMoreOrders = false;
@@ -74,20 +72,17 @@ public class OrdersController {
 
 			// 주문 처리
 			int paymentMethod = 1;
-			int orderAmount = 3000;
+			int orderAmount = 3000; // 실제로는 총 주문 금액 계산 로직 필요
 			int orderId = orderService.placeOrder(userId, menuItems, quantities);
 			if (orderId != 0) {
 				System.out.println("\t주문 처리되었습니다. 주문 번호: " + orderId);
 				PayController controller = new PayController();
-				controller.pay(orderId, userId, paymentMethod, orderAmount);
-
+				controller.pay(orderId, userId, paymentMethod, orderAmount, menuItems, quantities);
 			} else {
 				System.out.println("\t⚠️주문 처리에 실패했습니다.");
 			}
-
 		} catch (Exception e) {
 			e.printStackTrace();
-
 		}
 	}
 }
