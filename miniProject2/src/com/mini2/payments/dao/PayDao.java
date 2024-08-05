@@ -4,8 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+
 import com.mini2.payments.model.PaymentsModel;
-import com.mini2.orders.model.OrdersModel;
 import com.mini2.jdbcUtil.JdbcUtil;
 
 public class PayDao {
@@ -23,9 +24,11 @@ public class PayDao {
                     payment = new PaymentsModel();
                     payment.setPaymentId(rs.getInt("payment_id"));
                     payment.setOrderId(rs.getInt("order_id"));
+                    payment.setUserId(rs.getInt("user_id"));
                     payment.setPaymentMethod(rs.getInt("payment_method"));
                     payment.setPaymentDate(rs.getTimestamp("payment_date"));
-                    payment.setAmount(rs.getInt("amount"));
+                    payment.setOrderAmount(rs.getInt("order_amount"));
+                    payment.setTotalAmount(rs.getInt("total_amount"));
                     payment.setPaymentStatus(rs.getBoolean("pay_status"));
                 }
             }
@@ -37,22 +40,25 @@ public class PayDao {
 
     // 결제 정보를 삽입하는 메서드
     public boolean insertPayment(PaymentsModel payment) {
-        String sql = "INSERT INTO payments (order_id, payment_method, amount, pay_status) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO payments (order_id, user_id, payment_method, order_amount, total_amount, pay_status, payment_date) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = JdbcUtil.connection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1, payment.getOrderId());
-            pstmt.setInt(2, payment.getPaymentMethod());
-            pstmt.setTimestamp(3, payment.getPaymentDate());
-            pstmt.setInt(4, payment.getAmount());
-            pstmt.setBoolean(5, payment.isPaymentStatus());
+            pstmt.setInt(2, payment.getUserId());
+            pstmt.setInt(3, payment.getPaymentMethod());
+            pstmt.setInt(4, payment.getOrderAmount());
+            pstmt.setInt(5, payment.getTotalAmount()); // total_amount
+            pstmt.setBoolean(6, payment.isPaymentStatus());
+            pstmt.setTimestamp(7, new Timestamp(System.currentTimeMillis())); // payment_date
 
             int rowsAffected = pstmt.executeUpdate();
+            System.out.println("Rows affected: " + rowsAffected);
             return rowsAffected > 0;
         } catch (SQLException e) {
             e.printStackTrace();
+            System.out.println("Error: " + e.getMessage());
         }
         return false;
     }
-
 }

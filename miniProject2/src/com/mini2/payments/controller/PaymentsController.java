@@ -35,7 +35,7 @@ public class PaymentsController {
                 System.out.println("예시 제품명                           1               1000");
                 System.out.println("예시 제품명2                          2               2000");
                 System.out.println("-------------------------------------------------------");
-                System.out.printf("                                              금액: %d%n", payment.getAmount());
+                System.out.printf("                                              금액: %d%n", payment.getOrderAmount());
                 System.out.println("-------------------------------------------------------");
                 System.out.println(i + 1 + "번 리뷰하기");
                 System.out.println();

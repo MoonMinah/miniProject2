@@ -31,7 +31,8 @@ public class PaymentsDao {
                        payment.setOrderId(rs.getInt("order_id"));
                        payment.setPaymentMethod(rs.getInt("payment_method"));
                        payment.setPaymentDate(rs.getTimestamp("payment_date"));
-                       payment.setAmount(rs.getInt("amount"));
+                       payment.setOrderAmount(rs.getInt("order_amount"));
+                       payment.setTotalAmount(rs.getInt("total_amount"));
                        payment.setPaymentStatus(rs.getBoolean("pay_status"));
                        list.add(payment);
                    }

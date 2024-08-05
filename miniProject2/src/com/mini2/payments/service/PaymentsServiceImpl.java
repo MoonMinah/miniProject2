@@ -24,4 +24,9 @@ public class PaymentsServiceImpl implements PaymentsService {
     public PaymentsModel getPaymentByOrderId(int orderId) {
         return payDao.getPaymentByOrderId(orderId);
     }
+    
+    // 새로운 결제 항목을 생성하는 메서드
+    public boolean createPayment(PaymentsModel payment) {
+        return payDao.insertPayment(payment);
+    }
 }
