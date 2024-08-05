@@ -1,11 +1,15 @@
 package com.mini2.payments.controller;
 
+import java.util.List;
+import com.mini2.menuitems.model.MenuitemsModel;
+import com.mini2.orders.service.OrderServiceImpl;
 import com.mini2.payments.model.PaymentsModel;
 import com.mini2.payments.service.PaymentsServiceImpl;
 import com.mini2.menuitems.model.MenuitemsModel;
 import java.util.List;
 
 public class PayController {
+
 
 	public void pay(int orderId, int userId, int paymentMethod, int orderAmount, List<MenuitemsModel> menuItems,
 			List<Integer> quantities) {
@@ -52,5 +56,6 @@ public class PayController {
 		} else {
 			System.out.println("결제 생성에 실패했습니다.");
 		}
-	}
+
+   }
 }
