@@ -69,4 +69,42 @@ public class PayDao {
         }
         return false;
     }
+
+    // 결제 상태 업데이트 메서드
+    public boolean updatePaymentStatus(int paymentId, int totalAmount) {
+        String sql = "UPDATE payments SET total_amount = ?, pay_status = ? WHERE payment_id = ?";
+
+        try (Connection conn = JdbcUtil.connection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, totalAmount);
+            pstmt.setBoolean(2, true); // 결제 상태를 true로 변경
+            pstmt.setInt(3, paymentId);
+
+            int rowsAffected = pstmt.executeUpdate();
+            System.out.println("Rows affected: " + rowsAffected);
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Error: " + e.getMessage());
+        }
+        return false;
+    }
+    
+    // 결제 정보를 삭제하는 메서드
+    public boolean deletePaymentById(int paymentId) {
+        String sql = "DELETE FROM payments WHERE payment_id = ?";
+
+        try (Connection conn = JdbcUtil.connection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, paymentId);
+
+            int rowsAffected = pstmt.executeUpdate();
+            System.out.println("Rows affected: " + rowsAffected);
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Error: " + e.getMessage());
+        }
+        return false;
+    }
 }
