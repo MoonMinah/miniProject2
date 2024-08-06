@@ -91,8 +91,9 @@ public class PayController {
                                 if (isDeleted) {
                                     System.out.println("\t결제가 취소되었습니다.");
                                    OrderServiceImpl orderServiceImpl = new OrderServiceImpl();
+                                   // 외래키 참조로 인한 메뉴 상세 테이블 삭제.
                                    boolean isMenuDeleted = orderServiceImpl.deleteMenuDetail(orderId);
-                                    boolean isOrderDeleted = orderServiceImpl.deleteOrder(orderId);
+                                    boolean isOrderDeleted = orderServiceImpl.deleteOrder(orderId); //주문 테이블 삭제
                                     if (isMenuDeleted && isOrderDeleted) {
                                         System.out.println("\t주문이 취소되었습니다.");
                                     } else {

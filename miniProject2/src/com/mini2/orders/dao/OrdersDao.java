@@ -18,7 +18,7 @@ public class OrdersDao {
   PreparedStatement pstmt = null;
   ResultSet rs = null;
 
-  public List<CategoryModel> categorySelect() {
+  public List<CategoryModel> categoryMenu() {
 
     // 카테고리 목록
     List<CategoryModel> list = new ArrayList<CategoryModel>();
@@ -77,7 +77,8 @@ public class OrdersDao {
     }
   }
 
-  public static void insertMenuDetail(Connection conn, int orderId, int itemId, int quantity)
+  //수량 입력.
+  public void insertMenuDetail(Connection conn, int orderId, int itemId, int quantity)
       throws SQLException {
     String sql = "INSERT INTO menu_detail (item_id, order_id, quantity) VALUES (?, ?, ?)";
     try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -88,7 +89,8 @@ public class OrdersDao {
     }
   }
 
-  public static void updateOrderTotalAmount(Connection conn, int orderId, int totalAmount)
+  //수량에 따른 총 금액 수정.
+  public void updateOrderTotalAmount(Connection conn, int orderId, int totalAmount)
       throws SQLException {
     String sql = "UPDATE orders SET total_amount = ? WHERE order_id = ?";
     try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -114,7 +116,7 @@ public class OrdersDao {
       JdbcUtil.close(conn, pstmt);
     }
   }
-
+//주문 테이블 삭제
   public boolean deleteOrder(int orderId) {
     // TODO Auto-generated method stub
     String sql = "DELETE FROM orders WHERE order_id = ?";

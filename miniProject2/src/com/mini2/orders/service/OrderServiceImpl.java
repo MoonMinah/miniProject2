@@ -19,7 +19,7 @@ public class OrderServiceImpl implements OrderService{
   
 
   @Override
-  public List<CategoryModel> categoryAll() {
+  public List<CategoryModel> categoryMenu() {
     // TODO Auto-generated method stub
     Connection conn = null;
     PreparedStatement pstmt = null;
@@ -29,7 +29,7 @@ public class OrderServiceImpl implements OrderService{
       //db 연결
       conn = JdbcUtil.connection();
       
-      list = (ArrayList<CategoryModel>) dao.categorySelect();
+      list = (ArrayList<CategoryModel>) dao.categoryMenu();
     } catch (Exception e) {
       // TODO: handle exception
     }
@@ -59,12 +59,12 @@ public class OrderServiceImpl implements OrderService{
       for (int i = 0; i < menuItems.size(); i++) {
         MenuitemsModel menuItem = menuItems.get(i);
         int quantity = quantities.get(i);
-        OrdersDao.insertMenuDetail(conn, orderId, menuItem.getItemId(), quantity);
+        dao.insertMenuDetail(conn, orderId, menuItem.getItemId(), quantity);
         totalAmount += menuItem.getPrice() * quantity; // 총 금액 계산
       }
 
       // 주문 테이블의 총 금액 업데이트
-      OrdersDao.updateOrderTotalAmount(conn, orderId, totalAmount);
+      dao.updateOrderTotalAmount(conn, orderId, totalAmount);
 
       conn.commit(); // 트랜잭션 커밋
     } catch (SQLException e) {
