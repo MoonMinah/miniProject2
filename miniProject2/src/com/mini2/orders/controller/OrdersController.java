@@ -79,6 +79,7 @@ public class OrdersController {
 					quantities.add(quantity);
 				} else {
 					System.out.println("\t⚠️잘못된 메뉴 선택입니다.");
+					return;
 				}
 
 				System.out.println("\t담으신 메뉴 : " + selectedItem.getMenuName() + ", 수량: " + quantity);
