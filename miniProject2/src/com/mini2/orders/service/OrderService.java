@@ -9,5 +9,7 @@ public interface OrderService {
   
  List<CategoryModel> categoryAll(); //카테고리 목록 조회
  int placeOrder(int userId, List<MenuitemsModel> menuItems, List<Integer> quantities) throws SQLException; //주문처리
+ boolean deleteMenuDetail(int orderId);
+ boolean deleteOrder(int orderId); //결제 취소 시, 주문도 삭제
 
 }

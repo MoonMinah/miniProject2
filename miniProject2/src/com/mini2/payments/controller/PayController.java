@@ -5,7 +5,7 @@ import com.mini2.payments.service.PaymentsServiceImpl;
 import com.mini2.main.Main;
 import com.mini2.menuitems.model.MenuitemsModel;
 import com.mini2.orders.controller.OrdersController;
-
+import com.mini2.orders.service.OrderServiceImpl;
 import java.util.List;
 import java.util.Scanner;
 
@@ -90,6 +90,14 @@ public class PayController {
                                 boolean isDeleted = paymentService.deletePayment(payment.getPaymentId());
                                 if (isDeleted) {
                                     System.out.println("\t결제가 취소되었습니다.");
+                                   OrderServiceImpl orderServiceImpl = new OrderServiceImpl();
+                                   boolean isMenuDeleted = orderServiceImpl.deleteMenuDetail(orderId);
+                                    boolean isOrderDeleted = orderServiceImpl.deleteOrder(orderId);
+                                    if (isMenuDeleted && isOrderDeleted) {
+                                        System.out.println("\t주문이 취소되었습니다.");
+                                    } else {
+                                        System.out.println("\t주문 취소에 실패했습니다.");
+                                    }
                                 } else {
                                     System.out.println("\t결제 취소에 실패했습니다.");
                                 }
