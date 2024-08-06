@@ -59,7 +59,6 @@ public class PayDao {
             pstmt.setTimestamp(7, new Timestamp(System.currentTimeMillis())); // payment_date
 
             int rowsAffected = pstmt.executeUpdate();
-            System.out.println("Rows affected: " + rowsAffected);
             return rowsAffected > 0;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -99,7 +98,6 @@ public class PayDao {
             pstmt.setInt(1, paymentId);
 
             int rowsAffected = pstmt.executeUpdate();
-            System.out.println("Rows affected: " + rowsAffected);
             return rowsAffected > 0;
         } catch (SQLException e) {
             e.printStackTrace();

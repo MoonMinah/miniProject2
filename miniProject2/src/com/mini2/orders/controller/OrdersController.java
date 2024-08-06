@@ -20,50 +20,51 @@ public class OrdersController {
 		UsersController userController = UsersController.getInstance();
 		List<CategoryModel> categoryList = orderService.categoryAll();
 
-		
-
 		Map<String, Integer> session = userController.getSession();
 		Integer userId = session.get("user_id"); // Integer 객체로 받아오기
 		if (userId == null) {
 			System.out.println("\t사용자가 로그인되지 않았습니다.");
 			return; // 또는 예외 처리
 		}
-		
+
 		try {
 			boolean addMoreOrders = true;
 			List<MenuitemsModel> menuItems = new ArrayList<>();
 			List<Integer> quantities = new ArrayList<>();
 
-
 			while (addMoreOrders) {
-			  System.out.println("\t[카테고리 목록]");
-		        System.out.println("-------------------------------------------------------");
-		        if (categoryList != null && !categoryList.isEmpty()) {
-		          for (CategoryModel category : categoryList) {
-		            System.out.printf("%d. %s \t| ", category.getCategoryId(), category.getCategoryName());
-		          }
-		        } else {
-		          System.out.println("카테고리를 불러올 수 없습니다.");
-		          return;
-		        }
+				System.out.println("\n\t\t\t\t\t[카테고리 목록]");
+				System.out.println(
+						"==================================================================================================");
+				if (categoryList != null && !categoryList.isEmpty()) {
+					for (CategoryModel category : categoryList) {
+						System.out.printf("\t%d. %s \t| ", category.getCategoryId(), category.getCategoryName());
+					}
+				} else {
+					System.out.println("\t⚠️ 카테고리를 불러올 수 없습니다.");
+					return;
+				}
 
-		        System.out.println();
-		        System.out.println("-------------------------------------------------------");
+				System.out.println();
+				System.out.println(
+						"==================================================================================================");
 				System.out.print("\t카테고리를 입력해주세요 => ");
 				String categoryByName = scan.nextLine();
 				List<MenuitemsModel> menuList = orderService.getMenuByCategory(categoryByName);
 
 				System.out.println("|\t\t\t\t\t☕️ [메뉴 목록] ☕️\t\t\t\t\t\t|");
-				System.out.println("-------------------------------------------------------");
+				System.out.println(
+						"==================================================================================================");
 				if (menuList != null && !menuList.isEmpty()) {
 					for (MenuitemsModel menu : menuList) {
-						System.out.printf("%d. %s \t| %d\n", menu.getItemId(), menu.getMenuName(), menu.getPrice());
+						System.out.printf("\t%d. %s \t| %d\n", menu.getItemId(), menu.getMenuName(), menu.getPrice());
 					}
 				} else {
-					System.out.println("메뉴를 불러올 수 없습니다.");
+					System.out.println("\t⚠️ 메뉴를 불러올 수 없습니다.");
 					return;
 				}
-				System.out.println("-------------------------------------------------------");
+				System.out.println(
+						"==================================================================================================");
 				System.out.print("\t메뉴를 입력해주세요 => ");
 				String menuName = scan.nextLine();
 				System.out.print("\t수량을 입력해주세요 => ");
