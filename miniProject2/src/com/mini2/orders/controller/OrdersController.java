@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import com.mini2.category.model.CategoryModel;
+import com.mini2.main.Loading;
 import com.mini2.menuitems.model.MenuitemsModel;
 import com.mini2.orders.service.OrderServiceImpl;
 import com.mini2.payments.controller.PayController;
@@ -18,6 +19,7 @@ public class OrdersController {
 		OrderServiceImpl orderService = new OrderServiceImpl();
 		PaymentsServiceImpl paymentsServiceImpl = new PaymentsServiceImpl();
 		UsersController userController = UsersController.getInstance();
+		Loading loading = new Loading();
 		List<CategoryModel> categoryList = orderService.categoryAll();
 
 		Map<String, Integer> session = userController.getSession();
@@ -81,7 +83,6 @@ public class OrdersController {
 					System.out.println("\t⚠️잘못된 메뉴 선택입니다.");
 					return;
 				}
-
 				System.out.println("\t담으신 메뉴 : " + selectedItem.getMenuName() + ", 수량: " + quantity);
 				System.out.print("\t추가 주문하시겠습니까? (y/n) => ");
 				String addOrder = scan.nextLine();
@@ -95,7 +96,7 @@ public class OrdersController {
 			int orderAmount = 3000; // 실제로는 총 주문 금액 계산 로직 필요
 			int orderId = orderService.placeOrder(userId, menuItems, quantities);
 			if (orderId != 0) {
-				System.out.println("\t주문 처리되었습니다. 주문 번호: " + orderId);
+				loading.run();
 				PayController controller = new PayController();
 				controller.pay(orderId, userId, paymentMethod, orderAmount, menuItems, quantities);
 			} else {
