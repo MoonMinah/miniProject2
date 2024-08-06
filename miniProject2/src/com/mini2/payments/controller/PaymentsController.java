@@ -62,8 +62,8 @@ public class PaymentsController {
 					System.out.println();
 
 					// 리뷰 작성 처리
-//                ReviewsController controller = new ReviewsController();
-//                controller.review()
+                ReviewsController controller = new ReviewsController();
+                controller.wirteReview();
 
 					sc.nextLine();
 				}
