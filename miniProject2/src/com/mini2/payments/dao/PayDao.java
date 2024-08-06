@@ -97,6 +97,7 @@ public class PayDao {
             pstmt.setInt(1, paymentId);
 
             int rowsAffected = pstmt.executeUpdate();
+
             return rowsAffected > 0;
         } catch (SQLException e) {
             e.printStackTrace();
