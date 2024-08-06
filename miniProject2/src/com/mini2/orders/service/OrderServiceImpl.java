@@ -91,4 +91,20 @@ public class OrderServiceImpl implements OrderService{
     }
     return menuList;
   }
+
+  @Override
+  public boolean deleteMenuDetail(int orderId) {
+    // TODO Auto-generated method stub
+    return dao.deleteMenuDetail(orderId);
+  }
+  
+  @Override
+  public boolean deleteOrder(int orderId) {
+    // TODO Auto-generated method stub
+      return dao.deleteOrder(orderId);
+  
+  }
+
+
+ 
 }
