@@ -12,9 +12,9 @@ public class ReviewServiceImpl implements ReviewService {
 	List<ReviewsModel> reviewsModelList = new ArrayList<ReviewsModel>();
 
 	@Override
-	public void writeReviews(int rating, String comment) {
+	public void writeReviews(int paymentId, int rating, String comment) {
 
-		rd.writeReview(rating, comment);
+		rd.writeReview(paymentId, rating, comment);
 	}
 
 	@Override
@@ -29,15 +29,13 @@ public class ReviewServiceImpl implements ReviewService {
 	public void deleteReviews(int id) {
 		// TODO Auto-generated method stub
 		rd.deleteReview(id);
-		
+
 	}
 
 	@Override
 	public void updateReviews(int id, int rating, String comment) {
-		
+
 		rd.updateReview(id, rating, comment);
 	}
-	
-	
 
 }

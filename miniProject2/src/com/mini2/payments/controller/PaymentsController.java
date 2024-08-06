@@ -44,7 +44,7 @@ public class PaymentsController {
 				System.out.printf("\t\t                                              금액: %d%n",
 						payment.getTotalAmount());
 				System.out.println("\t\t-------------------------------------------------------");
-				System.out.println("\t\t - " + i + 1 + "번 리뷰하기");
+				System.out.println("\t\t - " + (i + 1) + "번 리뷰하기");
 				System.out.println();
 				System.out.println();
 			}
@@ -56,19 +56,17 @@ public class PaymentsController {
 			if (choice == 0) {
 				return;
 			} else {
-				while (choice != 0 && choice <= payments.size()) {
+				if (choice <= payments.size()) {
 					PaymentsModel selectedPayment = payments.get(choice - 1);
-					System.out.printf("선택한 결제 ID: %d%n", selectedPayment.getPaymentId());
+					int paymentId = selectedPayment.getPaymentId();
+					System.out.printf("\t선택한 결제 ID: %d%n", paymentId);
 					System.out.println();
 
 					// 리뷰 작성 처리
-                ReviewsController controller = new ReviewsController();
-                controller.wirteReview();
-
-					sc.nextLine();
+					ReviewsController reviewController = new ReviewsController();
+					reviewController.wirteReview(paymentId);
 				}
 			}
-			sc.close();
 		} else {
 			System.out.println("\t⚠️ 결제 정보를 불러올 수 없습니다.");
 		}

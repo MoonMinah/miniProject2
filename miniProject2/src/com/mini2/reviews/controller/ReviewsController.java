@@ -15,29 +15,19 @@ public class ReviewsController {
 	private static Scanner sc = new Scanner(System.in);
 	static ReviewServiceImpl rsi = new ReviewServiceImpl();
 
-	public static void main(String[] args) {
-		readReview();
-	}
-
-	public static void wirteReview() {
-		System.out.print("평점을 입력하세요 (1-5): ");
+	public void wirteReview(int paymentId) {
+		System.out.print("\t평점을 입력하세요 (1-5): ");
 		int rating = sc.nextInt();
 		sc.nextLine();
 
-		System.out.print("평가 내용을 입력하세요: ");
+		System.out.print("\t평가 내용을 입력하세요: ");
 		String comment = sc.nextLine();
 
-		rsi.writeReviews(rating, comment);
-
-		//어디로 갈지 정하기
-		
-//		sc.close();
+		rsi.writeReviews(paymentId, rating, comment);
 	}
 
-	public static void readReview() {
-
-		// rsi.readReviews();
-		System.out.println("리뷰아이디\t\t작성날짜\t\t평점\t작성내용");
+	public void readReview() {
+		System.out.println("\t리뷰아이디\t\t작성날짜\t\t평점\t작성내용");
 		System.out.println("------------------------------------------------");
 		List<ReviewsModel> reviewsModelList = new ArrayList();
 		reviewsModelList = rsi.readReviews();
@@ -50,24 +40,23 @@ public class ReviewsController {
 		}
 
 		System.out.println("------------------------------------------------");
-		System.out.println("1.리뷰 수정하기\n2.리뷰 삭제하기\n3.홈으로 ");
+		System.out.println("\t1.리뷰 수정하기\n\t2.리뷰 삭제하기\n\t3.홈으로 ");
 		int num = sc.nextInt();
 		sc.nextLine();
 		switch (num) {
 		case 1:
-			UpdateteReview();		
+			UpdateteReview();
 			break;
 		case 2:
 			deleteReview();
 			break;
 		case 3:
-			//홈으로 가기
-			break;
+			return;
 		}
 
 	}
 
-	public static void deleteReview() {
+	public void deleteReview() {
 		System.out.println("삭제를 원하는 리뷰 번호를 입력하세요: ");
 		int id = sc.nextInt();
 		sc.nextLine();
@@ -76,20 +65,15 @@ public class ReviewsController {
 		String yesOrNo = sc.nextLine();
 		if (yesOrNo.equals("y")) {
 			rsi.deleteReviews(id);
-			//홈(마이페이지)으로 가기
-//			UsersService us = new UsersService();
-//			us.manageUserInfo();
-		} else if(yesOrNo.equals("n")) {
-			//readReview();
-		}
-		else {
+
+		} else if (yesOrNo.equals("n")) {
+			return;
+		} else {
 			System.out.println("잘못 입력하셨습니다.");
 		}
-
-		
 	}
 
-	public static void UpdateteReview() {
+	public void UpdateteReview() {
 		System.out.println("수정을 원하는 리뷰 번호를 입력하세요: ");
 		int id = sc.nextInt();
 		sc.nextLine();
@@ -102,8 +86,7 @@ public class ReviewsController {
 		String comment = sc.nextLine();
 
 		rsi.updateReviews(id, rating, comment);
-
-		//홈(마이페이지)으로 가기
+		return;
 	}
 
 }
