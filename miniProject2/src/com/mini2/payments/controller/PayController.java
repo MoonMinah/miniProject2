@@ -28,15 +28,15 @@ public class PayController {
         if (isPaymentCreated) {
             PaymentsModel payment = paymentService.getPaymentByOrderId(orderId);
 
-            System.out.println("[결제 정보]");
-            System.out.println("========================================================");
+            System.out.println("\n\t\t\t\t🛒 [결제 정보] 🛒");
+            System.out.println("\n==================================================================================================");
 
             if (payment != null) {
-                System.out.printf("결제 번호: %d%n", payment.getPaymentId());
-                System.out.printf("결제 날짜: %s%n", payment.getPaymentDate());
-                System.out.println("--------------------------------------------------------");
-                System.out.println("제품명                               수량             금액");
-                System.out.println("--------------------------------------------------------");
+                System.out.printf("\t결제 번호: %d%n", payment.getPaymentId());
+                System.out.printf("\t결제 날짜: %s%n", payment.getPaymentDate());
+                System.out.println("\t\t--------------------------------------------------------");
+                System.out.println("\t\t제품명                               수량             금액");
+                System.out.println("\t\t--------------------------------------------------------");
 
                 // 총 금액 계산
                 int totalAmount = 0;
@@ -48,63 +48,57 @@ public class PayController {
                     int price = item.getPrice();
                     int itemTotal = price * quantity;
                     totalAmount += itemTotal;
-                    System.out.printf("%-26s %8d %17d%n", item.getMenuName(), quantity, itemTotal);
+                    System.out.printf("\t\t%-26s %8d %17d%n", item.getMenuName(), quantity, itemTotal);
                 }
 
                 // 총 금액 설정
                 payment.setTotalAmount(totalAmount);
 
-                System.out.println("--------------------------------------------------------");
-                System.out.printf("                                              금액: %d%n", payment.getTotalAmount());
-                System.out.println("--------------------------------------------------------");
+                System.out.println("\t\t--------------------------------------------------------");
+                System.out.printf("\t\t                                              금액: %d%n", payment.getTotalAmount());
+                System.out.println("\t\t--------------------------------------------------------");
 
                 Scanner sc = new Scanner(System.in);
 
-                System.out.println("\n정말 결제하시겠습니까?");
                 while (true) {
                     try {
-                        System.out.println("1.결제하기");
-                        System.out.println("2.결제취소");
-
+                        System.out.println("\t1.결제하기");
+                        System.out.println("\t2.결제취소");
+                        System.out.print("\t정말 결제하시겠습니까? => ");
+                        
                         String menu = sc.nextLine();
 
                         switch (menu) {
                             case "1":
-                                System.out.println("결제하기");
+                                System.out.println("\t결제하기");
                                 boolean isUpdated = paymentService.updatePaymentStatus(payment.getPaymentId(), totalAmount);
                                 if (isUpdated) {
-                                    System.out.println("결제가 완료되었습니다.");
-                                    OrdersController controller = new OrdersController();
-                    				controller.processOrder();
+                                    System.out.println("\t결제가 완료되었습니다.");
                                 } else {
-                                    System.out.println("결제에 실패했습니다.");
-                                  OrdersController controller = new OrdersController();
-                    				controller.processOrder();
+                                    System.out.println("\t결제에 실패했습니다.");
                                 }
                                 return; // while 루프를 벗어나기 위해 return
                             case "2":
-                                System.out.println("결제취소");
+                                System.out.println("\t결제취소");
                                 boolean isDeleted = paymentService.deletePayment(payment.getPaymentId());
                                 if (isDeleted) {
-                                    System.out.println("결제가 취소되었습니다.");
-                                    OrdersController controller = new OrdersController();
-                    				controller.processOrder();
+                                    System.out.println("\t결제가 취소되었습니다.");
                                 } else {
-                                    System.out.println("결제 취소에 실패했습니다.");
+                                    System.out.println("\t결제 취소에 실패했습니다.");
                                 }
                                 return; // while 루프를 벗어나기 위해 return
                             default:
-                                System.out.println("\n1 ~ 2번 중 선택해 주세요.");
+                                System.out.println("\n\t1 ~ 2번 중 선택해 주세요.");
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
             } else {
-                System.out.println("결제 정보를 불러올 수 없습니다.");
+                System.out.println("\t결제 정보를 불러올 수 없습니다.");
             }
         } else {
-            System.out.println("결제 생성에 실패했습니다.");
+            System.out.println("\t결제 생성에 실패했습니다.");
         }
     }
 }

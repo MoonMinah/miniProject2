@@ -19,7 +19,7 @@ public class Main {
             if (usersService.isUserLoggedIn()) {
                 // Main menu for logged-in users
                 System.out.println("\n==================================================================================================");
-                System.out.println("\t\t\t\t\t☕️ [카페 오더 앱] 메인 메뉴 ☕️");
+                System.out.println("\t\t\t\t\t☕️ [메인 메뉴] ☕️");
                 System.out.println("|\t1. 주문\t\t\t\t\t\t\t\t\t\t\t|");
                 System.out.println("|\t2. 회원 정보 관리\t\t\t\t\t\t\t\t\t\t|");
                 System.out.println("|\t3. 종료\t\t\t\t\t\t\t\t\t\t\t|");
