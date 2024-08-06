@@ -17,10 +17,9 @@ public class OrdersController {
 	public void processOrder() {
 		Scanner scan = new Scanner(System.in);
 		OrderServiceImpl orderService = new OrderServiceImpl();
-		PaymentsServiceImpl paymentsServiceImpl = new PaymentsServiceImpl();
 		UsersController userController = UsersController.getInstance();
 		Loading loading = new Loading();
-		List<CategoryModel> categoryList = orderService.categoryAll();
+		List<CategoryModel> categoryMenu = orderService.categoryMenu();
 
 		Map<String, Integer> session = userController.getSession();
 		Integer userId = session.get("user_id"); // Integer 객체로 받아오기
@@ -38,8 +37,8 @@ public class OrdersController {
 				System.out.println("\n\t\t\t\t\t[카테고리 목록]");
 				System.out.println(
 						"==================================================================================================");
-				if (categoryList != null && !categoryList.isEmpty()) {
-					for (CategoryModel category : categoryList) {
+				if (categoryMenu != null && !categoryMenu.isEmpty()) {
+					for (CategoryModel category : categoryMenu) {
 						System.out.printf("\t%d. %s \t| ", category.getCategoryId(), category.getCategoryName());
 					}
 				} else {
@@ -50,7 +49,7 @@ public class OrdersController {
 				System.out.println();
 				System.out.println(
 						"==================================================================================================");
-				System.out.print("\t카테고리를 입력해주세요 => ");
+				System.out.print("\t카테고리 이름을 입력해주세요 => ");
 				String categoryByName = scan.nextLine();
 				List<MenuitemsModel> menuList = orderService.getMenuByCategory(categoryByName);
 
@@ -63,6 +62,7 @@ public class OrdersController {
 					}
 				} else {
 					System.out.println("\t⚠️ 메뉴를 불러올 수 없습니다.");
+					System.out.println("\t⚠️ 번호가 아닌 메뉴를 입력해주세요!!");
 					return;
 				}
 				System.out.println(
@@ -81,6 +81,8 @@ public class OrdersController {
 					quantities.add(quantity);
 				} else {
 					System.out.println("\t⚠️잘못된 메뉴 선택입니다.");
+					System.out.println("\t⚠️메뉴 : " + menuName + ", 수량 : " + quantity);
+					System.out.println("\t⚠️메뉴이름과 수량을 정확히 입력해주세요!");
 					return;
 				}
 				System.out.println("\t담으신 메뉴 : " + selectedItem.getMenuName() + ", 수량: " + quantity);
