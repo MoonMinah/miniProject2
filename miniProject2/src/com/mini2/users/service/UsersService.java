@@ -4,6 +4,7 @@ package com.mini2.users.service;
 import com.mini2.users.controller.UsersController;
 import com.mini2.event.UserPoints;
 import com.mini2.payments.controller.PaymentsController;
+import com.mini2.reviews.controller.ReviewsController;
 
 import java.util.Scanner;
 
@@ -11,6 +12,7 @@ public class UsersService {
     private UsersController usersController = UsersController.getInstance();
     private UserPoints userPoints = new UserPoints();
     private PaymentsController paymentController = new PaymentsController();
+    private ReviewsController reviewController = new ReviewsController();
     private Scanner sc = new Scanner(System.in);
 
     public boolean isUserLoggedIn() {
@@ -51,6 +53,7 @@ public class UsersService {
                 	paymentController.paymentList();
                 	break;
                 case 3:
+                	reviewController.readReview();
                 	break;
                 case 4:
                     Integer userId = usersController.getSession().get("user_id");
