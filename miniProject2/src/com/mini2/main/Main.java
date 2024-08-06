@@ -17,7 +17,6 @@ public class Main {
 
         while (isRunning) {
             if (usersService.isUserLoggedIn()) {
-                // Main menu for logged-in users
                 System.out.println("\n==================================================================================================");
                 System.out.println("\t\t\t\t\t☕️ [메인 메뉴] ☕️");
                 System.out.println("|\t1. 주문\t\t\t\t\t\t\t\t\t\t\t|");

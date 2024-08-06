@@ -47,7 +47,7 @@ public class ReviewsDao {
 
 			int rows = pstmt.executeUpdate();
 			if (rows > 0) {
-				System.out.println("리뷰가 등록되었습니다.");
+				System.out.println("\t📖 리뷰가 등록되었습니다.");
 			}
 
 			JdbcUtil.close(conn, pstmt);
@@ -97,7 +97,7 @@ public class ReviewsDao {
 			int rows = pstmt.executeUpdate();
 
 			if (rows > 0) {
-				System.out.println("리뷰가 삭제되었습니다.");
+				System.out.println("\t📖 리뷰가 삭제되었습니다.");
 
 			}
 
@@ -129,13 +129,12 @@ public class ReviewsDao {
 
 			int rows = pstmt.executeUpdate();
 			if (rows > 0) {
-				System.out.println("리뷰가 수정되었습니다.");
+				System.out.println("\t📖 리뷰가 수정되었습니다.");
 			}
 
 			JdbcUtil.close(conn, pstmt);
 
 		} catch (SQLException e) {
-			// TODO: handle exception
 			e.printStackTrace();
 		}
 
