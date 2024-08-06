@@ -29,27 +29,18 @@ public class PayController {
         if (isPaymentCreated) {
             PaymentsModel payment = paymentService.getPaymentByOrderId(orderId);
 
-            System.out.println("\n\t\t\t\t🛒 [결제 정보] 🛒");
-            System.out.println("\n==================================================================================================");
-
 
             if (payment != null) {
-                System.out.printf("\t결제 번호: %d%n", payment.getPaymentId());
-                System.out.printf("\t결제 날짜: %s%n", payment.getPaymentDate());
-                System.out.println("\t\t--------------------------------------------------------");
-                System.out.println("\t\t제품명                               수량             금액");
-                System.out.println("\t\t--------------------------------------------------------");
-
-			System.out.println("[주문 정보]");
-			System.out.println("======================================================");
+			System.out.println("\n\t\t\t\t🛒 [주문 정보] 🛒");
+			System.out.println("\n==================================================================================================");
 
 
 			if (payment != null) {
-				System.out.printf("주문 번호: %d%n", orderId);
-				System.out.printf("주문 날짜: %s%n", payment.getPaymentDate());
-				System.out.println("-------------------------------------------------------");
-				System.out.println("제품명                               수량             금액");
-				System.out.println("-------------------------------------------------------");
+				System.out.printf("\t주문 번호: %d%n", orderId);
+				System.out.printf("\t주문 날짜: %s%n", payment.getPaymentDate());
+				System.out.println("\t\t-------------------------------------------------------");
+				System.out.println("\t\t제품명                               수량             금액");
+				System.out.println("\t\t-------------------------------------------------------");
 				
 				// 총 금액 계산
                 int totalAmount = 0;
@@ -87,13 +78,9 @@ public class PayController {
                                 System.out.println("\t결제하기");
                                 boolean isUpdated = paymentService.updatePaymentStatus(payment.getPaymentId(), totalAmount);
                                 if (isUpdated) {
-                                    System.out.println("\t결제가 완료되었습니다.");
-
-                                    System.out.println("결제가 완료되었습니다.");
+                                    System.out.println("\t💵 결제가 완료되었습니다.");
                                     //OrdersController controller = new OrdersController();
                     				//controller.processOrder();
-                                    Main.main(null);
-
                                 } else {
                                     System.out.println("\t결제에 실패했습니다.");
                                 }
