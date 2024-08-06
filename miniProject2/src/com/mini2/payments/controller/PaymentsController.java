@@ -59,8 +59,6 @@ public class PaymentsController {
 				if (choice <= payments.size()) {
 					PaymentsModel selectedPayment = payments.get(choice - 1);
 					int paymentId = selectedPayment.getPaymentId();
-					System.out.printf("\t선택한 결제 ID: %d%n", paymentId);
-					System.out.println();
 
 					// 리뷰 작성 처리
 					ReviewsController reviewController = new ReviewsController();
