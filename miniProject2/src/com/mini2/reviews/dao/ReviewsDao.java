@@ -16,7 +16,6 @@ import com.mini2.users.controller.UsersController;
 //db와 데이터 주고 받음
 public class ReviewsDao {
 
-	List<ReviewsModel> reviewsModelList = new ArrayList<ReviewsModel>();
 	Connection conn = null;
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
@@ -31,6 +30,7 @@ public class ReviewsDao {
 			return; // 또는 예외 처리
 		}
 		int user_id = userIdtemp.intValue();
+		int payment_id = paymentId;
 
 		try {
 			Connection conn = JdbcUtil.connection();
@@ -39,7 +39,6 @@ public class ReviewsDao {
 
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 
-			int payment_id = paymentId;
 			pstmt.setInt(1, payment_id);
 			pstmt.setInt(2, user_id);
 			pstmt.setInt(3, rating);
@@ -47,7 +46,9 @@ public class ReviewsDao {
 
 			int rows = pstmt.executeUpdate();
 			if (rows > 0) {
+
 				System.out.println("\t📖 리뷰가 등록되었습니다.");
+
 			}
 
 			JdbcUtil.close(conn, pstmt);
@@ -59,13 +60,28 @@ public class ReviewsDao {
 
 	// 리뷰 조회
 	public List<ReviewsModel> readReview() {
+		UsersController userController = UsersController.getInstance();
+		Map<String, Integer> session = userController.getSession();
+		Integer userIdtemp = session.get("user_id"); // Integer 객체로 받아오기
+		
+		System.out.println("\tuser_id"+ userIdtemp); //테스트
+		
+		if (userIdtemp == null) {
+			System.out.println("\t사용자가 로그인되지 않았습니다.");
+			return new ArrayList<>(); // 또는 예외 처리
+		}
+		int user_id = userIdtemp.intValue();
+		List<ReviewsModel> reviewsModelList = new ArrayList<ReviewsModel>();
+
 		try {
-			reviewsModelList.clear();
+
+			//reviewsModelList.clear();
 			conn = JdbcUtil.connection();
 
-			String sql = "SELECT review_id, rating, comment, review_date FROM project2.reviews";
+			String sql = "SELECT review_id, rating, comment, review_date FROM project2.reviews WHERE user_id = ? ";
 
 			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, user_id); // 쿼리 실행 전에 파라미터 설정
 
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
@@ -74,14 +90,15 @@ public class ReviewsDao {
 				rm.setRating(rs.getInt("rating"));
 				rm.setComment(rs.getString("comment"));
 				rm.setReviewDate(rs.getTimestamp("review_date"));
+
 				reviewsModelList.add(rm);
 
 			}
 
-			JdbcUtil.close(conn, pstmt, rs);
-
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			JdbcUtil.close(conn, pstmt, rs);
 		}
 		return reviewsModelList;
 	}
@@ -97,7 +114,9 @@ public class ReviewsDao {
 			int rows = pstmt.executeUpdate();
 
 			if (rows > 0) {
+
 				System.out.println("\t📖 리뷰가 삭제되었습니다.");
+
 
 			}
 
@@ -113,23 +132,22 @@ public class ReviewsDao {
 		try {
 			conn = JdbcUtil.connection();
 
-			String sql = "UPDATE reviews SET payment_id=?, user_id=?, rating=?, comment=?, review_date = now() WHERE review_id = ? "; // 해당
-																																		// 리뷰
-																																		// 지우기
+			String sql = "UPDATE reviews SET rating=?, comment=?, review_date = now() WHERE review_id = ? "; 
+																																	
 			pstmt = conn.prepareStatement(sql);
 
-			int payment_id = 1;
-			int user_id = 1;
-
-			pstmt.setInt(1, payment_id);
-			pstmt.setInt(2, user_id);
-			pstmt.setInt(3, rating);
-			pstmt.setString(4, comment);
-			pstmt.setInt(5, id);
+//
+//			pstmt.setInt(1, payment_id);
+//			pstmt.setInt(2, user_id);
+			pstmt.setInt(1, rating);
+			pstmt.setString(2, comment);
+			pstmt.setInt(3, id);
 
 			int rows = pstmt.executeUpdate();
 			if (rows > 0) {
+
 				System.out.println("\t📖 리뷰가 수정되었습니다.");
+
 			}
 
 			JdbcUtil.close(conn, pstmt);
