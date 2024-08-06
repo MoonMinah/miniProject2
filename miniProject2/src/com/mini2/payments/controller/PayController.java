@@ -2,6 +2,7 @@ package com.mini2.payments.controller;
 
 import com.mini2.payments.model.PaymentsModel;
 import com.mini2.payments.service.PaymentsServiceImpl;
+import com.mini2.main.Main;
 import com.mini2.menuitems.model.MenuitemsModel;
 import com.mini2.orders.controller.OrdersController;
 
@@ -31,6 +32,7 @@ public class PayController {
             System.out.println("\n\t\t\t\t🛒 [결제 정보] 🛒");
             System.out.println("\n==================================================================================================");
 
+
             if (payment != null) {
                 System.out.printf("\t결제 번호: %d%n", payment.getPaymentId());
                 System.out.printf("\t결제 날짜: %s%n", payment.getPaymentDate());
@@ -38,8 +40,20 @@ public class PayController {
                 System.out.println("\t\t제품명                               수량             금액");
                 System.out.println("\t\t--------------------------------------------------------");
 
-                // 총 금액 계산
+			System.out.println("[주문 정보]");
+			System.out.println("======================================================");
+
+
+			if (payment != null) {
+				System.out.printf("주문 번호: %d%n", orderId);
+				System.out.printf("주문 날짜: %s%n", payment.getPaymentDate());
+				System.out.println("-------------------------------------------------------");
+				System.out.println("제품명                               수량             금액");
+				System.out.println("-------------------------------------------------------");
+				
+				// 총 금액 계산
                 int totalAmount = 0;
+
 
                 // 실제 제품명과 수량, 금액 출력
                 for (int i = 0; i < menuItems.size(); i++) {
@@ -74,6 +88,12 @@ public class PayController {
                                 boolean isUpdated = paymentService.updatePaymentStatus(payment.getPaymentId(), totalAmount);
                                 if (isUpdated) {
                                     System.out.println("\t결제가 완료되었습니다.");
+
+                                    System.out.println("결제가 완료되었습니다.");
+                                    //OrdersController controller = new OrdersController();
+                    				//controller.processOrder();
+                                    Main.main(null);
+
                                 } else {
                                     System.out.println("\t결제에 실패했습니다.");
                                 }
@@ -101,4 +121,5 @@ public class PayController {
             System.out.println("\t결제 생성에 실패했습니다.");
         }
     }
+}
 }
