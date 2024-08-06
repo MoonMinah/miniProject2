@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 import com.mini2.payments.model.PaymentsModel;
 import com.mini2.jdbcUtil.JdbcUtil;
+import com.mini2.menuDetail.model.MenuDetailModel;
+import com.mini2.menuitems.model.MenuitemsModel;
 
 public class PaymentsDao {
 	
@@ -49,4 +51,58 @@ public class PaymentsDao {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+    // 주문 ID에 따라 메뉴 상세 정보를 가져오는 메서드
+    public List<MenuDetailModel> getMenuDetailsByOrderId(int orderId) {
+        List<MenuDetailModel> list = new ArrayList<>();
+        String sql = "SELECT * FROM menu_detail WHERE order_id = ?";
+
+        try (Connection conn = JdbcUtil.connection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, orderId);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    MenuDetailModel detail = new MenuDetailModel();
+                    detail.setOrder_id(rs.getInt("order_id"));
+                    detail.setItem_id(rs.getInt("item_id"));
+                    detail.setQuantity(rs.getInt("quantity"));
+                    list.add(detail);
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+
+    // 아이템 ID에 따라 메뉴 항목 정보를 가져오는 메서드
+    public MenuitemsModel getMenuItemById(int itemId) {
+        MenuitemsModel item = null;
+        String sql = "SELECT * FROM menuitems WHERE item_id = ?";
+
+        try (Connection conn = JdbcUtil.connection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, itemId);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    item = new MenuitemsModel();
+                    item.setItemId(rs.getInt("item_id"));
+                    item.setCategoryId(rs.getInt("category_id"));
+                    item.setMenuName(rs.getString("menu_name"));
+                    item.setDescription(rs.getString("description"));
+                    item.setPrice(rs.getInt("price"));
+                    item.setAvailable(rs.getBoolean("available"));
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return item;
+    }
   }

@@ -3,6 +3,9 @@ package com.mini2.payments.controller;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+
+import com.mini2.menuDetail.model.MenuDetailModel;
+import com.mini2.menuitems.model.MenuitemsModel;
 import com.mini2.payments.model.PaymentsModel;
 import com.mini2.payments.service.PaymentsServiceImpl;
 import com.mini2.reviews.controller.ReviewsController;
@@ -37,13 +40,26 @@ public class PaymentsController {
 				System.out.println("\t\t제품명                               수량             금액");
 				System.out.println("\t\t-------------------------------------------------------");
 
-				// 해당 결제 ID에 대한 제품 목록을 가져와서 출력합니다.
-				System.out.println("\t\t예시 제품명                           1               1000");
-				System.out.println("\t\t예시 제품명2                          2               2000");
-				System.out.println("\t\t-------------------------------------------------------");
-				System.out.printf("\t\t                                              금액: %d%n",
-						payment.getTotalAmount());
-				System.out.println("\t\t-------------------------------------------------------");
+
+                List<MenuDetailModel> menuDetails = paymentService.getMenuDetailsByOrderId(payment.getOrderId());
+                if (menuDetails == null || menuDetails.isEmpty()) {
+                    System.out.println("\t\t메뉴 상세 정보를 불러올 수 없습니다.");
+                } else {
+                    int totalAmount = 0;
+                    for (MenuDetailModel menuDetail : menuDetails) {
+                        MenuitemsModel menuItem = paymentService.getMenuItemById(menuDetail.getItem_id());
+                        if (menuItem != null) {
+                            int itemTotal = menuItem.getPrice() * menuDetail.getQuantity();
+                            totalAmount += itemTotal;
+                            System.out.printf("\t\t%s                            %d               %d%n",
+                                    menuItem.getMenuName(), menuDetail.getQuantity(), itemTotal);
+                        }
+                    }
+
+                    System.out.println("\t\t-------------------------------------------------------");
+                    System.out.printf("\t\t                                              금액: %d%n", totalAmount);
+                    System.out.println("\t\t-------------------------------------------------------");
+                }
 				System.out.println("\t\t - " + (i + 1) + "번 리뷰하기");
 				System.out.println();
 				System.out.println();
@@ -60,14 +76,15 @@ public class PaymentsController {
 					PaymentsModel selectedPayment = payments.get(choice - 1);
 					int paymentId = selectedPayment.getPaymentId();
 
-					// 리뷰 작성 처리
-					ReviewsController reviewController = new ReviewsController();
-					reviewController.wirteReview(paymentId);
+//					// 리뷰 작성 처리
+//					ReviewsController reviewController = new ReviewsController();
+//					reviewController.writeReview(paymentId);
+				} else {
+					System.out.println("\t⚠️ 잘못된 선택입니다. 다시 시도해 주세요.");
 				}
 			}
 		} else {
 			System.out.println("\t⚠️ 결제 정보를 불러올 수 없습니다.");
 		}
 	}
-
 }
