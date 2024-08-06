@@ -145,7 +145,6 @@ public class ReviewsDao {
 
 			int rows = pstmt.executeUpdate();
 			if (rows > 0) {
-
 				System.out.println("\t📖 리뷰가 수정되었습니다.");
 
 			}
