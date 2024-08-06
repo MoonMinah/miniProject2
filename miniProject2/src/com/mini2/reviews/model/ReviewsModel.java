@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 public class ReviewsModel {
-//	private int reviewId; //리뷰 아이디
+	private int reviewId; //리뷰 아이디
 //	private int paymentId; //결제 아이디
 //	private int orderId; //주문 아이디
 //	private int userId; //유저 아이디

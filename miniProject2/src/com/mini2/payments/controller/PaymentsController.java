@@ -62,8 +62,8 @@ public class PaymentsController {
 					System.out.println();
 
 					// 리뷰 작성 처리
-//                ReviewsController controller = new ReviewsController();
-//                controller.review()
+                ReviewsController controller = new ReviewsController();
+                controller.wirteReview();
 
 					sc.nextLine();
 				}
@@ -73,4 +73,5 @@ public class PaymentsController {
 			System.out.println("\t⚠️ 결제 정보를 불러올 수 없습니다.");
 		}
 	}
+
 }
