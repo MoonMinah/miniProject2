@@ -63,6 +63,7 @@ public class UsersService {
 			case 5:
 				System.out.println("\t로그아웃 되었습니다.");
 				usersController.getSession().clear();
+				
 				inUserInfoMenu = false;
 				break;
 			case 6:
