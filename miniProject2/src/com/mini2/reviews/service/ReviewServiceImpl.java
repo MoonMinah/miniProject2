@@ -6,6 +6,7 @@ import java.util.List;
 import com.mini2.reviews.dao.ReviewsDao;
 import com.mini2.reviews.model.ReviewsModel;
 
+//ReviewService 인테페이스 구현
 public class ReviewServiceImpl implements ReviewService {
 
 	ReviewsDao rd = new ReviewsDao();
