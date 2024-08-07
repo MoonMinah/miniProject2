@@ -81,9 +81,9 @@ public class PaymentsController {
 					PaymentsModel selectedPayment = payments.get(choice - 1);
 					int paymentId = selectedPayment.getPaymentId();
 
-//					// 리뷰 작성 처리
-//					ReviewsController reviewController = new ReviewsController();
-//					reviewController.writeReview(paymentId);
+					// 리뷰 작성 처리
+					ReviewsController reviewController = new ReviewsController();
+					reviewController.writeReview(paymentId);
 				} else {
 					System.out.println("\t⚠️ 잘못된 선택입니다. 다시 시도해 주세요.");
 				}
