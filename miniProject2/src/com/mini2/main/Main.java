@@ -15,7 +15,7 @@ public class Main {
 		Scanner scan = new Scanner(System.in);
 
 		asciiArt.ASCIIArt();
-		audioPlayer.play("C:\\Users\\KOSA\\git\\miniProject2\\music.wav");
+		audioPlayer.play("C:\\Users\\KOSA\\git\\miniProject2\\music2.wav");
 
 		while (isRunning) {
 			if (usersService.isUserLoggedIn()) {

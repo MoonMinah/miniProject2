@@ -40,26 +40,31 @@ public class PaymentsController {
 				System.out.println("\t\t제품명                               수량             금액");
 				System.out.println("\t\t-------------------------------------------------------");
 
+				List<MenuDetailModel> menuDetails = paymentService.getMenuDetailsByOrderId(payment.getOrderId());
+				if (menuDetails == null || menuDetails.isEmpty()) {
+					System.out.println("\t\t메뉴 상세 정보를 불러올 수 없습니다.");
+				} else {
+					int totalAmount = payment.getTotalAmount(); // 총 결제 금액
+					int finalAmount = payment.getOrderAmount(); // 실제 결제 금액
+					int pointsUsed = -1 * (finalAmount - totalAmount); // 포인트 사용량
 
-                List<MenuDetailModel> menuDetails = paymentService.getMenuDetailsByOrderId(payment.getOrderId());
-                if (menuDetails == null || menuDetails.isEmpty()) {
-                    System.out.println("\t\t메뉴 상세 정보를 불러올 수 없습니다.");
-                } else {
-                    int totalAmount = 0;
-                    for (MenuDetailModel menuDetail : menuDetails) {
-                        MenuitemsModel menuItem = paymentService.getMenuItemById(menuDetail.getItem_id());
-                        if (menuItem != null) {
-                            int itemTotal = menuItem.getPrice() * menuDetail.getQuantity();
-                            totalAmount += itemTotal;
-                            System.out.printf("\t\t%s                            %d               %d%n",
-                                    menuItem.getMenuName(), menuDetail.getQuantity(), itemTotal);
-                        }
-                    }
+					for (MenuDetailModel menuDetail : menuDetails) {
+						MenuitemsModel menuItem = paymentService.getMenuItemById(menuDetail.getItem_id());
+						if (menuItem != null) {
+							int itemTotal = menuItem.getPrice() * menuDetail.getQuantity();
+							System.out.printf("\t\t%s                            %d               %d%n",
+									menuItem.getMenuName(), menuDetail.getQuantity(), itemTotal);
+						}
+					}
+					// 만들어야함
+					System.out.println("\t\t-------------------------------------------------------");
+					System.out.printf("\t\t                                       포인트 사용량: %d%n", pointsUsed);
+					System.out.println("\t\t-------------------------------------------------------");
 
-                    System.out.println("\t\t-------------------------------------------------------");
-                    System.out.printf("\t\t                                              금액: %d%n", totalAmount);
-                    System.out.println("\t\t-------------------------------------------------------");
-                }
+					System.out.println("\t\t-------------------------------------------------------");
+					System.out.printf("\t\t                                              금액: %d%n", totalAmount);
+					System.out.println("\t\t-------------------------------------------------------");
+				}
 				System.out.println("\t\t - " + (i + 1) + "번 리뷰하기");
 				System.out.println();
 				System.out.println();
