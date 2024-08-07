@@ -49,7 +49,7 @@ public class OrdersController {
 				System.out.println();
 				System.out.println(
 						"==================================================================================================");
-				System.out.print("\t카테고리 이름을 입력해주세요 => ");
+				System.out.print("\t카테고리 이름을 입력해주세요 (번호x) => ");
 				String categoryByName = scan.nextLine();
 				List<MenuitemsModel> menuList = orderService.getMenuByCategory(categoryByName);
 
@@ -67,35 +67,62 @@ public class OrdersController {
 				}
 				System.out.println(
 						"==================================================================================================");
-				System.out.print("\t메뉴를 입력해주세요 => ");
+				System.out.print("\t메뉴를 입력해주세요 (번호x) => ");
 				String menuName = scan.nextLine();
-				System.out.print("\t수량을 입력해주세요 => ");
+				System.out.print("\t수량을 입력해주세요 (1이상) => ");
 				int quantity = scan.nextInt();
 				scan.nextLine(); // 개행 문자 처리
 
-				MenuitemsModel selectedItem = menuList.stream().filter(item -> item.getMenuName().equals(menuName))
-						.findFirst().orElse(null);
+			
+				if(quantity <= 0) {
+				  System.out.println("\t⚠️수량은 1 이상이여야 합니다!");
+				  System.out.println("\t⚠️ 다시 처음으로 돌아갑니다!");
+				  addMoreOrders = true;
+				}
+				
+				else {
+				  MenuitemsModel selectedItem = menuList.stream().filter(item -> item.getMenuName().equals(menuName))
+                      .findFirst().orElse(null);
 
-				if (selectedItem != null) {
-					menuItems.add(selectedItem);
-					quantities.add(quantity);
-				} else {
-					System.out.println("\t⚠️잘못된 메뉴 선택입니다.");
-					System.out.println("\t⚠️메뉴 : " + menuName + ", 수량 : " + quantity);
-					System.out.println("\t⚠️메뉴이름과 수량을 정확히 입력해주세요!");
-					return;
+              if (selectedItem != null) {
+                  menuItems.add(selectedItem);
+                  quantities.add(quantity);
+              } else {
+                  System.out.println("\t⚠️잘못된 메뉴 선택입니다.");
+                  System.out.println("\t⚠️메뉴 : " + menuName + ", 수량 : " + quantity);
+                  System.out.println("\t⚠️메뉴이름 및 수량을 정확히 입력해주세요!");
+                  return;
+              }
+              System.out.println("\t담으신 메뉴 : " + selectedItem.getMenuName() + ", 수량: " + quantity);
+              System.out.print("\t추가 주문하시겠습니까? (y/n) => ");
+              String addOrder = scan.nextLine();
+              if (addOrder.equalsIgnoreCase("n") || addOrder.equalsIgnoreCase("아니오") || addOrder.equalsIgnoreCase("N")) {
+                  addMoreOrders = false;
+              }else if(addOrder.equalsIgnoreCase("y") || addOrder.equalsIgnoreCase("예") || addOrder.equalsIgnoreCase("Y")) {
+                System.out.println("\t추가 주문을 선택하셨습니다!");
+                System.out.println("\t추가 주문을 위해 메뉴를 선택해주세요!");
+              }
+              else {
+                System.out.println("\t⚠️잘못 입력하셨습니다!");
+                System.out.println("\t⚠️처음부터 다시 입력해주세요!");
+                return;
+              }
+             
 				}
-				System.out.println("\t담으신 메뉴 : " + selectedItem.getMenuName() + ", 수량: " + quantity);
-				System.out.print("\t추가 주문하시겠습니까? (y/n) => ");
-				String addOrder = scan.nextLine();
-				if (addOrder.equalsIgnoreCase("n")) {
-					addMoreOrders = false;
-				}
+				
+				
+			
 			}
 
 			// 주문 처리
 			int paymentMethod = 1;
-			int orderAmount = 3000; // 실제로는 총 주문 금액 계산 로직 필요
+			// 주문 금액 계산
+			int orderAmount = 0;
+			for (int i = 0; i < menuItems.size(); i++) {
+				MenuitemsModel item = menuItems.get(i);
+				int itemQuantity = quantities.get(i);
+				orderAmount += item.getPrice() * itemQuantity;
+			}
 			int orderId = orderService.placeOrder(userId, menuItems, quantities);
 			if (orderId != 0) {
 				loading.run();

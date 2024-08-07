@@ -74,6 +74,7 @@ public class UsersController {
 				}
 			}
 		}
+		check = true;
 
 		// 전화번호 검증 정규식
 		String regexrPhoneNumber = "^\\d{3}-\\d{3,4}-\\d{4}$";
