@@ -23,7 +23,6 @@ public class UserDelete {
             
             // SQL 실행
             int rows = pstmt.executeUpdate();
-            System.out.println("삭제된 행 수 : " + rows);
             
             // PreparedStatement 종료
             pstmt.close();
