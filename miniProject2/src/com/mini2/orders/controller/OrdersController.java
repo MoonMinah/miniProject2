@@ -73,7 +73,7 @@ public class OrdersController {
 				}
 				System.out.println(
 						"==================================================================================================");
-				System.out.print("\t메뉴를 입력해주세요 (번호x) => ");
+				System.out.print("\t메뉴를 입력해주세요 (번호 또는 메뉴이름) => ");
 				String menuName = scan.nextLine().trim();
 				//System.out.println();
 				System.out.print("\t수량을 입력해주세요 (1이상) => ");
@@ -88,7 +88,7 @@ public class OrdersController {
 				}
 				
 				else {
-				  MenuitemsModel selectedItem = menuList.stream().filter(item -> item.getMenuName().equals(menuName) || item.getCategoryId() == (Integer.parseInt(menuName)) )
+				  MenuitemsModel selectedItem = menuList.stream().filter(item -> item.getMenuName().equals(menuName) || item.getItemId() == (Integer.parseInt(menuName)))
                       .findFirst().orElse(null);
 
               if (selectedItem != null) {
