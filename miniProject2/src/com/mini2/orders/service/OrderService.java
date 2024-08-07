@@ -11,5 +11,6 @@ public interface OrderService {
  int placeOrder(int userId, List<MenuitemsModel> menuItems, List<Integer> quantities) throws SQLException; //주문처리
  boolean deleteMenuDetail(int orderId);
  boolean deleteOrder(int orderId); //결제 취소 시, 주문도 삭제
+ boolean updateOrderStatus(int orderId);
 
 }
