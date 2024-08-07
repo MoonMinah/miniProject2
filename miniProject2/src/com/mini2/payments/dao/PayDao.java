@@ -44,9 +44,6 @@ public class PayDao {
 
         String sql = "INSERT INTO payments (order_id, user_id, payment_method, order_amount, total_amount, pay_status, payment_date) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-      
-
-
         try (Connection conn = JdbcUtil.connection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1, payment.getOrderId());
