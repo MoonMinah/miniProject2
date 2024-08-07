@@ -50,7 +50,7 @@ public class OrdersController {
 				System.out.println(
 						"==================================================================================================");
 				System.out.print("\t카테고리 이름을 입력해주세요 (번호x) => ");
-				String categoryByName = scan.nextLine();
+				String categoryByName = scan.nextLine().trim();
 				List<MenuitemsModel> menuList = orderService.getMenuByCategory(categoryByName);
 
 				System.out.println("|\t\t\t\t\t☕️ [메뉴 목록] ☕️\t\t\t\t\t\t|");
@@ -68,7 +68,7 @@ public class OrdersController {
 				System.out.println(
 						"==================================================================================================");
 				System.out.print("\t메뉴를 입력해주세요 (번호x) => ");
-				String menuName = scan.nextLine();
+				String menuName = scan.nextLine().trim();
 				System.out.print("\t수량을 입력해주세요 (1이상) => ");
 				int quantity = scan.nextInt();
 				scan.nextLine(); // 개행 문자 처리
@@ -95,7 +95,7 @@ public class OrdersController {
               }
               System.out.println("\t담으신 메뉴 : " + selectedItem.getMenuName() + ", 수량: " + quantity);
               System.out.print("\t추가 주문하시겠습니까? (y/n) => ");
-              String addOrder = scan.nextLine();
+              String addOrder = scan.nextLine().trim();
               if (addOrder.equalsIgnoreCase("n") || addOrder.equalsIgnoreCase("아니오") || addOrder.equalsIgnoreCase("N")) {
                   addMoreOrders = false;
               }else if(addOrder.equalsIgnoreCase("y") || addOrder.equalsIgnoreCase("예") || addOrder.equalsIgnoreCase("Y")) {

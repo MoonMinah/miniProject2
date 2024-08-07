@@ -133,4 +133,21 @@ public class OrdersDao {
       JdbcUtil.close(conn, pstmt);
     }
   }
+  
+  public boolean updateOrderStatus(int orderId) {
+    // TODO Auto-generated method stub
+    String sql = "UPDATE orders SET status = 1 WHERE order_id = ?";
+    try {
+      conn = JdbcUtil.connection();
+      PreparedStatement pstmt = conn.prepareStatement(sql);
+      pstmt.setInt(1, orderId);
+      int affectedRows = pstmt.executeUpdate();
+      return affectedRows > 0;
+    } catch (SQLException e) {
+      e.printStackTrace();
+      return false;
+    }finally {
+      JdbcUtil.close(conn, pstmt);
+    }
+  }
 }

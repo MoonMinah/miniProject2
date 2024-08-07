@@ -106,5 +106,12 @@ public class OrderServiceImpl implements OrderService{
   }
 
 
+  @Override
+  public boolean updateOrderStatus(int orderId) {
+    // TODO Auto-generated method stub
+    return dao.updateOrderStatus(orderId);
+  }
+
+
  
 }
