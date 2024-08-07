@@ -2,11 +2,8 @@ package com.mini2.payments.controller;
 
 import com.mini2.payments.model.PaymentsModel;
 import com.mini2.payments.service.PaymentsServiceImpl;
-import com.mini2.event.UserPoints;
 import com.mini2.event.UsersPointDao;
-import com.mini2.main.Main;
 import com.mini2.menuitems.model.MenuitemsModel;
-import com.mini2.orders.controller.OrdersController;
 import com.mini2.orders.service.OrderServiceImpl;
 import java.util.List;
 import java.util.Scanner;
@@ -33,10 +30,10 @@ public class PayController {
 			PaymentsModel payment = paymentService.getPaymentByOrderId(orderId);
 
 			if (payment != null) {
-				System.out.println("\n\t\t\t\t🛒 [주문 정보] 🛒");
 				System.out.println(
 						"\n==================================================================================================");
-
+				System.out.println("\n\t\t\t\t🛒 [주문 정보] 🛒");
+				
 				if (payment != null) {
 					System.out.printf("\t주문 번호: %d%n", orderId);
 					System.out.printf("\t주문 날짜: %s%n", payment.getPaymentDate());
@@ -108,6 +105,9 @@ public class PayController {
 								break;
 							case "2":
 								break;
+							default:
+								System.out.println("\t올바른 옵션을 선택해 주세요.");
+								continue; // 다시 옵션을 선택하도록 루프 계속
 							}
 
 							System.out.println("\n\t1. 결제하기");
@@ -121,7 +121,9 @@ public class PayController {
 								boolean isUpdated = paymentService.updatePaymentStatus(payment.getPaymentId(),
 										totalMoney);
 								if (isUpdated) {
-									usersPointDao.deductUserPoints(userId, usePointAmount); // 사용한 만큼 포인트 차감
+									if (usePointAmount > 0) {
+										usersPointDao.deductUserPoints(userId, usePointAmount); // 사용한 만큼 포인트 차감
+									}
 									System.out.println("\t💵 결제가 완료되었습니다.");
 								} else {
 									System.out.println("\t결제에 실패했습니다.");

@@ -116,7 +116,13 @@ public class OrdersController {
 
 			// 주문 처리
 			int paymentMethod = 1;
-			int orderAmount = 3000; // 실제로는 총 주문 금액 계산 로직 필요
+			// 주문 금액 계산
+			int orderAmount = 0;
+			for (int i = 0; i < menuItems.size(); i++) {
+				MenuitemsModel item = menuItems.get(i);
+				int itemQuantity = quantities.get(i);
+				orderAmount += item.getPrice() * itemQuantity;
+			}
 			int orderId = orderService.placeOrder(userId, menuItems, quantities);
 			if (orderId != 0) {
 				loading.run();

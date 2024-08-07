@@ -32,13 +32,13 @@ public class UserInsert {
 			rs = pstmt.executeQuery();
 
 			if (rs.next() && rs.getInt(1) > 0) {
-				 System.out.println("이메일이 이미 존재합니다.");
-				 return;
+				System.out.println("이메일이 이미 존재합니다.");
+				return;
 			}
 
 			// 새로운 사용자 추가
-			String sql = "INSERT INTO Users (user_name, email, password, phone_number, address, registration_date) "
-					+ "VALUES (?, ?, ?, ?, ?, ?)";
+			String sql = "INSERT INTO Users (user_name, email, password, phone_number, address, registration_date, user_point) "
+					+ "VALUES (?, ?, ?, ?, ?, ?, ?)";
 			pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			pstmt.setString(1, newUserName);
 			pstmt.setString(2, newEmail);
@@ -46,6 +46,7 @@ public class UserInsert {
 			pstmt.setString(4, newPhoneNumber);
 			pstmt.setString(5, newAddress);
 			pstmt.setTimestamp(6, new Timestamp(System.currentTimeMillis()));
+			pstmt.setInt(7, 0);
 
 			int rows = pstmt.executeUpdate();
 			int newUserId = -1;
@@ -73,19 +74,39 @@ public class UserInsert {
 
 					if (eventId != -1) {
 						// 추천인 이벤트 참여 기록 추가
-						String userEventSql = "INSERT INTO UserEvents (user_id, event_id, participation_date, points_awarded) "
+						String referrerEventSql = "INSERT INTO UserEvents (user_id, event_id, participation_date, points_awarded) "
 								+ "VALUES (?, ?, ?, ?)";
-						pstmt = conn.prepareStatement(userEventSql);
-						pstmt.setInt(1, referrerId);
-						pstmt.setInt(2, eventId);
-						pstmt.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
-						pstmt.setInt(4, 100); // 추천인에게 포인트 부여
+						pstmt = conn.prepareStatement(referrerEventSql);
+						pstmt.setInt(1, referrerId); // 추천인 ID
+						pstmt.setInt(2, eventId); // 이벤트 ID
+						pstmt.setTimestamp(3, new Timestamp(System.currentTimeMillis())); // 참여 날짜
+						pstmt.setInt(4, 100); // 추천인에게 부여된 포인트
 						pstmt.executeUpdate();
 
 						// 새로운 사용자 이벤트 기록 추가
-						pstmt.setInt(1, newUserId);
-						pstmt.setInt(4, 50); // 새로운 사용자에게 포인트 부여
+						String newUserEventSql = "INSERT INTO UserEvents (user_id, event_id, participation_date, points_awarded) "
+								+ "VALUES (?, ?, ?, ?)";
+						pstmt = conn.prepareStatement(newUserEventSql);
+						pstmt.setInt(1, newUserId); // 새로운 사용자 ID
+						pstmt.setInt(2, eventId); // 이벤트 ID
+						pstmt.setTimestamp(3, new Timestamp(System.currentTimeMillis())); // 참여 날짜
+						pstmt.setInt(4, 50); // 새로운 사용자에게 부여된 포인트
 						pstmt.executeUpdate();
+
+						// 추천인에게 포인트 부여
+						String userUpdateReferrerSql = "UPDATE Users SET user_point = user_point + ? WHERE user_id = ?";
+						pstmt = conn.prepareStatement(userUpdateReferrerSql);
+						pstmt.setInt(1, 100); // 추천인에게 부여된 포인트
+						pstmt.setInt(2, referrerId);
+						pstmt.executeUpdate();
+
+						// 새로운 사용자에게 포인트 부여
+						String userUpdateNewUserSql = "UPDATE Users SET user_point = user_point + ? WHERE user_id = ?";
+						pstmt = conn.prepareStatement(userUpdateNewUserSql);
+						pstmt.setInt(1, 50); // 새로운 사용자에게 부여된 포인트
+						pstmt.setInt(2, newUserId);
+						pstmt.executeUpdate();
+
 					}
 				}
 			}
