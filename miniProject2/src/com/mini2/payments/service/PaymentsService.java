@@ -15,4 +15,5 @@ public interface PaymentsService {
     boolean deletePayment(int paymentId);
     List<MenuDetailModel> getMenuDetailsByOrderId(int orderId);
     MenuitemsModel getMenuItemById(int itemId);
+    boolean checkReviewExists(int paymentId);
 }

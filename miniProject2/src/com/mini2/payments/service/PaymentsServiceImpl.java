@@ -14,11 +14,6 @@ public class PaymentsServiceImpl implements PaymentsService {
     private PaymentsDao paymentsDao = new PaymentsDao();
 
     @Override
-    public List<PaymentsModel> getAllPayments() {
-        return paymentsDao.getAllPayments();
-    }
-
-    @Override
     public List<PaymentsModel> getPaymentsByUserId(int userId) {
         return paymentsDao.getPaymentsByUserId(userId);
     }
@@ -40,13 +35,12 @@ public class PaymentsServiceImpl implements PaymentsService {
 
     @Override
     public boolean deletePayment(int paymentId) {
-
         return payDao.deletePaymentById(paymentId);
     }
-    
+
     @Override
     public List<MenuDetailModel> getMenuDetailsByOrderId(int orderId) {
-    	List<MenuDetailModel> menuDetails = paymentsDao.getMenuDetailsByOrderId(orderId);
+        List<MenuDetailModel> menuDetails = paymentsDao.getMenuDetailsByOrderId(orderId);
         return menuDetails != null ? menuDetails : new ArrayList<>();
     }
 
@@ -54,4 +48,15 @@ public class PaymentsServiceImpl implements PaymentsService {
     public MenuitemsModel getMenuItemById(int itemId) {
         return paymentsDao.getMenuItemById(itemId);
     }
+
+    @Override
+    public boolean checkReviewExists(int paymentId) {
+        return paymentsDao.checkReviewExists(paymentId);
+    }
+
+	@Override
+	public List<PaymentsModel> getAllPayments() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
