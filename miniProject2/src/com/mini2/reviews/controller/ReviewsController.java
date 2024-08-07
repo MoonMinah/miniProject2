@@ -17,33 +17,33 @@ public class ReviewsController {
 	static ReviewServiceImpl rsi = new ReviewServiceImpl();
 
 	// 리뷰 작성 페이지
-	public void wirteReview(int paymentId) {
+	public void writeReview(int paymentId) {
 		int rating;
 		String comment;
 
 		// 평점 유효성 검사
 		while (true) {
-			System.out.print("\t평점을 입력하세요 (1-5): ");
+			System.out.print("\t평점을 입력하세요 (1-5) => ");
 			rating = sc.nextInt();
 			sc.nextLine();
 
 			if (rating >= 1 && rating <= 5) {
 				break; // 올바른 범위의 숫자가 입력되면 반복 종료
 			} else {
-				System.out.println("\t잘못 입력하셨습니다. 1-5 사이의 숫자를 입력하세요.");
+				System.out.println("\t⚠️ 잘못 입력하셨습니다. 1-5 사이의 숫자를 입력하세요.");
 			}
 
 		}
 
 		// 평가 내용 유효성 검사
 		while (true) {
-			System.out.print("\t내용을 입력하세요 (5자 이내): ");
+			System.out.print("\t내용을 입력하세요 (5자 이내) => ");
 			comment = sc.nextLine();
 
 			if (comment.length() <= 50) {
 				break; // 입력된 내용이 50자 이내일 경우 반복 종료
 			} else {
-				System.out.println("\t잘못 입력하셨습니다. 5자 이내로 입력하세요.");
+				System.out.println("\t⚠️ 잘못 입력하셨습니다. 5자 이내로 입력하세요.");
 			}
 		}
 
@@ -56,7 +56,7 @@ public class ReviewsController {
 	// 리뷰 조회 페이지
 	public void readReview() {
 
-		System.out.println("\n\t\t\t\t  [리뷰 목록]  ");
+		System.out.println("\n\t\t\t\t 📖 [리뷰 목록] 📖 ");
 		System.out.println("\t\t======================================================");
 
 		System.out.println("\t\t리뷰 번호\t\t작성 날짜\t\t평점\t작성 내용");
@@ -85,7 +85,7 @@ public class ReviewsController {
 			sc.nextLine();
 			switch (num) {
 			case 1:
-				updateteReview();
+				updateReview();
 				validInput = true;
 				break;
 			case 2:
@@ -96,7 +96,7 @@ public class ReviewsController {
 				validInput = true;
 				break;
 			default:
-				System.out.println("\t잘못 입력 하셨습니다. 다시 입력해주세요.");
+				System.out.println("\t⚠️ 잘못 입력 하셨습니다. 다시 입력해주세요.");
 			}
 
 		}
@@ -104,10 +104,27 @@ public class ReviewsController {
 	}
 
 	public void deleteReview() {
+		int id;
+		while (true) {
+	        System.out.print("\t삭제를 원하는 리뷰 번호를 입력하세요 => ");
+	        id = sc.nextInt();
+	        sc.nextLine();
 
-		System.out.print("\t삭제를 원하는 리뷰 번호를 입력하세요 => ");
-		int id = sc.nextInt();
-		sc.nextLine();
+	        boolean reviewExists = false;
+	        for (int i = 0; i < reviewsModelList.size(); i++) {
+	            ReviewsModel rm = reviewsModelList.get(i);
+	            if (id == rm.getReviewId()) {
+	                reviewExists = true;
+	                break;
+	            }
+	        }
+
+	        if (reviewExists) {
+	            break; // 유효한 리뷰 아이디가 입력된 경우 반복 종료
+	        } else {
+	            System.out.println("\t⚠️ 존재하지 않는 리뷰입니다. 다시 입력하세요.");
+	        }
+	    }	
 
 		System.out.print("\t리뷰를 삭제 하시겠습니까? (y/n) => ");
 
@@ -118,60 +135,60 @@ public class ReviewsController {
 		} else if (yesOrNo.equals("n")) {
 			return;
 		} else {
-			System.out.println("\t잘못 입력하셨습니다.");
+			System.out.println("\t⚠️ 잘못 입력하셨습니다.");
 		}
 	}
 
 
-	public void updateteReview() {
-		System.out.print("\t수정을 원하는 리뷰 번호를 입력하세요: ");
-		int id = sc.nextInt();
-		sc.nextLine();
+	public void updateReview() {
+	    int id;
+	    while (true) {
+	        System.out.print("\t수정을 원하는 리뷰 번호를 입력하세요 => ");
+	        id = sc.nextInt();
+	        sc.nextLine();
 
-		
+	        boolean reviewExists = false;
+	        for (int i = 0; i < reviewsModelList.size(); i++) {
+	            ReviewsModel rm = reviewsModelList.get(i);
+	            if (id == rm.getReviewId()) {
+	                reviewExists = true;
+	                break;
+	            }
+	        }
 
-			for (int i = 0; i < reviewsModelList.size(); i++) {
-				ReviewsModel rm = reviewsModelList.get(i);
-				if (id != reviewsModelList.get(i).getReviewId()) {
-					System.out.println("존재하지 않는 리뷰입니다");
+	        if (reviewExists) {
+	            break; // 유효한 리뷰 아이디가 입력된 경우 반복 종료
+	        } else {
+	            System.out.println("\t⚠️ 존재하지 않는 리뷰입니다. 다시 입력하세요.");
+	        }
+	    }
 
-				} else {
+	    int rating;
+	    String comment;
+	    while (true) {
+	        System.out.print("\t평점을 입력하세요 (1-5) => ");
+	        rating = sc.nextInt();
+	        sc.nextLine();
 
-					break;
+	        if (rating >= 1 && rating <= 5) {
+	            break; // 올바른 범위의 숫자가 입력되면 반복 종료
+	        } else {
+	            System.out.println("\t⚠️ 잘못 입력하셨습니다. 1-5 사이의 숫자를 입력하세요.");
+	        }
+	    }
 
-				}
+	    while (true) {
+	        System.out.print("\t내용을 입력하세요 (5자 이내) => ");
+	        comment = sc.nextLine();
 
-			}
-		
+	        if (comment.length() <= 5) {
+	            break; // 입력된 내용이 5자 이내일 경우 반복 종료
+	        } else {
+	            System.out.println("\t⚠️ 5자 이내로 입력하세요.");
+	        }
+	    }
 
-		int rating;
-		String comment;
-		while (true) {
-			System.out.print("\t평점을 입력하세요 (1-5): ");
-			rating = sc.nextInt();
-			sc.nextLine();
-
-			if (rating >= 1 && rating <= 5) {
-				break; // 올바른 범위의 숫자가 입력되면 반복 종료
-			} else {
-				System.out.println("\t잘못 입력하셨습니다. 1-5 사이의 숫자를 입력하세요.");
-			}
-
-		}
-
-		while (true) {
-			System.out.print("\t내용을 입력하세요 (5자 이내): ");
-			comment = sc.nextLine();
-
-			if (comment.length() <= 5) {
-				break; // 입력된 내용이 50자 이내일 경우 반복 종료
-			} else {
-				System.out.println("\t5자 이내로 입력하세요.");
-			}
-		}
-
-		rsi.updateReviews(id, rating, comment);
-		return;
-
+	    rsi.updateReviews(id, rating, comment);
+	    return;
 	}
 }
