@@ -67,6 +67,7 @@ public class OrderServiceImpl implements OrderService{
       dao.updateOrderTotalAmount(conn, orderId, totalAmount);
 
       conn.commit(); // 트랜잭션 커밋
+      conn.setAutoCommit(true); //자동커밋 재설정
     } catch (SQLException e) {
       if (conn != null) {
         conn.rollback(); // 오류 발생 시 롤백
@@ -78,12 +79,28 @@ public class OrderServiceImpl implements OrderService{
     return orderId;
   }
 
+  //메뉴 이름을 입력하여 출력하는 메서드
   public List<MenuitemsModel> getMenuByCategory(String category) {
     Connection conn = null;
     List<MenuitemsModel> menuList = null;
     try {
       conn = JdbcUtil.connection();
       menuList = menuDetailDao.menuSelect(conn, category);
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } finally {
+      JdbcUtil.close(conn);
+    }
+    return menuList;
+  }
+  
+  //번호를 입력받아 메뉴를 출력하는 메서드
+  public List<MenuitemsModel> getMenuByCategory(int categoryId) {
+    Connection conn = null;
+    List<MenuitemsModel> menuList = null;
+    try {
+      conn = JdbcUtil.connection();
+      menuList = menuDetailDao.menuSelect(conn, categoryId);
     } catch (SQLException e) {
       e.printStackTrace();
     } finally {
