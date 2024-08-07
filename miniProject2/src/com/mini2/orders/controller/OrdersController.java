@@ -49,10 +49,16 @@ public class OrdersController {
 				System.out.println();
 				System.out.println(
 						"==================================================================================================");
-				System.out.print("\t카테고리 이름을 입력해주세요 (번호x) => ");
-				String categoryByName = scan.nextLine().trim();
-				List<MenuitemsModel> menuList = orderService.getMenuByCategory(categoryByName);
+				System.out.print("\t카테고리 번호를 입력해주세요 (예시 1, 2 ...) => ");
+				//String categoryByName = scan.nextLine().trim();
+				int categoryById = scan.nextInt();
+				scan.nextLine();
+				List<MenuitemsModel> menuList = orderService.getMenuByCategory(categoryById);
 
+				if(categoryById <= 0 || categoryById > 5) {
+				  System.out.println("\t⚠️ 카테고리 번호를 정확히 입력해주세요!");
+				  return;
+				}
 				System.out.println("|\t\t\t\t\t☕️ [메뉴 목록] ☕️\t\t\t\t\t\t|");
 				System.out.println(
 						"==================================================================================================");
@@ -69,6 +75,7 @@ public class OrdersController {
 						"==================================================================================================");
 				System.out.print("\t메뉴를 입력해주세요 (번호x) => ");
 				String menuName = scan.nextLine().trim();
+				//System.out.println();
 				System.out.print("\t수량을 입력해주세요 (1이상) => ");
 				int quantity = scan.nextInt();
 				scan.nextLine(); // 개행 문자 처리
@@ -81,7 +88,7 @@ public class OrdersController {
 				}
 				
 				else {
-				  MenuitemsModel selectedItem = menuList.stream().filter(item -> item.getMenuName().equals(menuName))
+				  MenuitemsModel selectedItem = menuList.stream().filter(item -> item.getMenuName().equals(menuName) || item.getCategoryId() == (Integer.parseInt(menuName)) )
                       .findFirst().orElse(null);
 
               if (selectedItem != null) {
