@@ -18,7 +18,7 @@ public class Loading extends Thread  {
         try {
             for (String line : lines) {
                 System.out.println(line);
-                Thread.sleep(500); // 1초 대기
+                Thread.sleep(500); // 0.5초 대기
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
