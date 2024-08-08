@@ -1,6 +1,7 @@
 package com.mini2.orders.controller;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -51,14 +52,16 @@ public class OrdersController {
 						"==================================================================================================");
 				System.out.print("\t카테고리 번호를 입력해주세요 (예시 1, 2 ...) => ");
 				//String categoryByName = scan.nextLine().trim();
-				int categoryById = scan.nextInt();
-				scan.nextLine();
-				List<MenuitemsModel> menuList = orderService.getMenuByCategory(categoryById);
+				
+				  int categoryById = scan.nextInt();
+	              scan.nextLine();
+	              List<MenuitemsModel> menuList = orderService.getMenuByCategory(categoryById);
 
-				if(categoryById <= 0 || categoryById > 5) {
-				  System.out.println("\t⚠️ 카테고리 번호를 정확히 입력해주세요!");
-				  return;
-				}
+	                if(categoryById <= 0 || categoryById > 5) {
+	                  System.out.println("\t⚠️ 카테고리 번호를 정확히 입력해주세요!");
+	                  return;
+	                }
+
 				System.out.println("|\t\t\t\t\t☕️ [메뉴 목록] ☕️\t\t\t\t\t\t|");
 				System.out.println(
 						"==================================================================================================");
@@ -73,22 +76,22 @@ public class OrdersController {
 				}
 				System.out.println(
 						"==================================================================================================");
-				System.out.print("\t메뉴를 입력해주세요 (번호x) => ");
+				System.out.print("\t메뉴를 입력해주세요 (숫자 및 이름) => ");
 				String menuName = scan.nextLine().trim();
 				//System.out.println();
-				System.out.print("\t수량을 입력해주세요 (1이상) => ");
+				System.out.print("\t수량을 입력해주세요 (숫자) => ");
 				int quantity = scan.nextInt();
 				scan.nextLine(); // 개행 문자 처리
 
 			
 				if(quantity <= 0) {
 				  System.out.println("\t⚠️수량은 1 이상이여야 합니다!");
-				  System.out.println("\t⚠️ 다시 처음으로 돌아갑니다!");
+				  System.out.println("\t⚠️ 다시 선택해주세요!");
 				  addMoreOrders = true;
 				}
 				
 				else {
-				  MenuitemsModel selectedItem = menuList.stream().filter(item -> item.getMenuName().equals(menuName) || item.getCategoryId() == (Integer.parseInt(menuName)) )
+				  MenuitemsModel selectedItem = menuList.stream().filter(item -> item.getMenuName().equals(menuName) || item.getItemId() == (Integer.parseInt(menuName)))
                       .findFirst().orElse(null);
 
               if (selectedItem != null) {
@@ -139,7 +142,10 @@ public class OrdersController {
 				System.out.println("\t⚠️주문 처리에 실패했습니다.");
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+		  System.out.println("\t⚠️정확히 입력해주세요!");
+		  System.out.println("\t⚠️메인화면으로 돌아갑니다!");
+			//e.printStackTrace();
+			//return;
 		}
 	}
 
