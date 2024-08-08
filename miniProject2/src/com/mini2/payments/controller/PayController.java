@@ -69,8 +69,8 @@ public class PayController {
           int usePointAmount = 0; // 사용하는 포인트 양
           while (true) {
             try {
-              System.out.println("\t1. 포인트 사용하기");
-              System.out.println("\t2. 결제 진행하기");
+              System.out.println("\t1. 포인트 결제진행");
+              System.out.println("\t2. 현금 결제진행");
               System.out.print("\t옵션을 선택해주세요 => ");
               String pointcheck = sc.nextLine();
 
