@@ -73,7 +73,7 @@ public class OrdersController {
 				}
 				System.out.println(
 						"==================================================================================================");
-				System.out.print("\t메뉴를 입력해주세요 (번호 또는 메뉴이름) => ");
+				System.out.print("\t메뉴를 입력해주세요 (번호 및 메뉴) => ");
 				String menuName = scan.nextLine().trim();
 				//System.out.println();
 				System.out.print("\t수량을 입력해주세요 (1이상) => ");
