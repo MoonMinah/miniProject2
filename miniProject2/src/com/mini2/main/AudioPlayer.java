@@ -17,7 +17,7 @@ public class AudioPlayer {
 			clip.open(audioStream);
 			clip.start();
 		} catch (Exception e) {
-			e.printStackTrace();
+			
 		}
 	}
 
