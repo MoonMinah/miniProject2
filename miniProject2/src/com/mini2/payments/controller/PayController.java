@@ -13,7 +13,12 @@ public class PayController {
 
     private PaymentsServiceImpl paymentService = new PaymentsServiceImpl();
     private UsersPointDao usersPointDao = new UsersPointDao();
-    private Scanner sc = new Scanner(System.in);
+    private Scanner scan;
+
+    // 생성자
+    public PayController(Scanner scan) {
+        this.scan = scan;
+    }
 
     public void pay(int orderId, int userId, int paymentMethod, int orderAmount,
                     List<MenuitemsModel> menuItems, List<Integer> quantities) {
