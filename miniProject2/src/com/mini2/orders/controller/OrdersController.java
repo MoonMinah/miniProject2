@@ -136,7 +136,7 @@ public class OrdersController {
 			int orderId = orderService.placeOrder(userId, menuItems, quantities);
 			if (orderId != 0) {
 				loading.run();
-				PayController controller = new PayController();
+				PayController controller = new PayController(scan);
 				controller.pay(orderId, userId, paymentMethod, orderAmount, menuItems, quantities);
 			} else {
 				System.out.println("\t⚠️주문 처리에 실패했습니다.");
